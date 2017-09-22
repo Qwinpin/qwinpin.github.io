@@ -106,6 +106,7 @@ function get_JSON(){
         load_JSON = true;
         authors_upd = false;
         update_select();
+        list_of_quotes = unique(list_of_quotes)
         document.getElementById("get_JSON").innerHTML = 
           "<p> New loaded </p>";
         document.getElementById("get_JSON").className = 
