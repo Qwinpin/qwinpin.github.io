@@ -53,7 +53,14 @@
         </p>
       </button>
 
-      <button type = "button", class = "button", id = "get_JSON", style = "float:right", onclick = "get_JSON()">
+      <select name="authors", class = "select", id = "selector", onclick = 'update_select()'>
+        <option value="All">All</option>
+        <option value="- Thomas Edison">- Thomas Edison</option>
+        <option value="- Johann Wolfgang von Goethe">- Johann Wolfgang von Goethe</option>
+        <option value="- Albert Einstein">- Albert Einstein</option>
+      </select>
+
+      <button type = "button", class = "button", id = "get_JSON", onclick = "get_JSON()">
         <p>
         Load new from url
         </p>
