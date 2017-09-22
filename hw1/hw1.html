@@ -34,20 +34,32 @@
         <p class = "quote", id = "qotd">"All successful men and women are big dreamers. They imagine what their future could be, ideal in every respect, and then they work every day toward their distant vision, that goal or purpose." – Brian Tracy</p>
       </blockquote>
     </div>
-    
-    <button type = "button", class = "button", onclick = "changeQ(qotd)">
-      <p>
-      Change quote of The Day
-      </p>
-    </button>
-    
-    <button type = "button", class = "button", onclick = "add_quote(change)">
-      <p>
-      Load new qoute
-      </p>
-    </button>
-    
-    <div class = "covered", style = "margin-top:25px">
+    <div>
+      <button type = "button", class = "button", onclick = "changeQ(qotd)">
+        <p>
+        Change quote of The Day
+        </p>
+      </button>
+
+      <button type = "button", class = "button", id = "button_load", onclick = "add_quote(otherq)">
+        <p>
+        Show new qoutes
+        </p>
+      </button>
+
+      <button type = "button", class = "button", id = "button_sort", onclick = "sort(otherq)", style = 'visibility:hidden'>
+        <p>
+        Sort
+        </p>
+      </button>
+
+      <button type = "button", class = "button", id = "get_JSON", style = "float:right", onclick = "get_JSON()">
+        <p>
+        Load new from url
+        </p>
+      </button>
+    </div>
+    <div class = "covered", id = "otherq", style = "margin-top:25px">
       
       <p class = "title_2", >
       Other quotes good too
