@@ -2,20 +2,10 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>A Pen by  Qwin</title>
-  
-  
-  
-      <link rel="stylesheet" href="css/style.css">
+  <title>HW1</title>
+ 
+      <link rel="stylesheet" href="css/style.css?version=1">
 
-  
-</head>
-
-<body>
-  <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HW1</title>
 </head>
 <body>
   <div class = "main">
@@ -37,10 +27,26 @@
     <div>
       <button type = "button", class = "button", onclick = "changeQ(qotd)">
         <p>
-        Change quote of The Day
+        Change QoTD
         </p>
       </button>
-
+       
+      <button type = "button", class = "button", id = "get_JSON", onclick = "get_JSON()">
+          <p>
+          Load new from url
+          </p>
+      </button>
+    </div>
+    <div style = "margin-top:25px">
+      <p>Chose author name or all</p>
+      <select name="authors", class = "select", id = "selector", onclick = 'update_select()'>
+          <option value="All">All</option>
+          <option value="- Thomas Edison">- Thomas Edison</option>
+          <option value="- Johann Wolfgang von Goethe">- Johann Wolfgang von Goethe</option>
+          <option value="- Albert Einstein">- Albert Einstein</option>
+      </select>
+    </div>
+    <div> 
       <button type = "button", class = "button", id = "button_load", onclick = "add_quote(otherq)">
         <p>
         Show new qoutes
@@ -52,19 +58,7 @@
         Sort
         </p>
       </button>
-
-      <select name="authors", class = "select", id = "selector", onclick = 'update_select()'>
-        <option value="All">All</option>
-        <option value="- Thomas Edison">- Thomas Edison</option>
-        <option value="- Johann Wolfgang von Goethe">- Johann Wolfgang von Goethe</option>
-        <option value="- Albert Einstein">- Albert Einstein</option>
-      </select>
-
-      <button type = "button", class = "button", id = "get_JSON", onclick = "get_JSON()">
-        <p>
-        Load new from url
-        </p>
-      </button>
+     
     </div>
     <div class = "covered", id = "otherq", style = "margin-top:25px">
       

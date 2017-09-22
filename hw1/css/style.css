@@ -1,6 +1,6 @@
 .main{
   font-family: 'Open Sans', sans-serif;
-  max-widht: 960px;
+  max-width: 960px;
   margin-left: 50px;
   margin-right: 50px;
 }
@@ -10,14 +10,14 @@
 }
 
 .title_1{
-  font-size: 300%;
+  font-size: 200%;
   color: #1946ba;
   margin-top: 25px;
   margin-bottom: 25px;
     }
     
 .title_2{
-  font-size: 200%;
+  font-size: 150%;
   margin-left: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -35,13 +35,15 @@
   background-color: #37a8db;
   color: white;
   text-align: center;
-  vertical-align: middle;
-  font-size: 13pt;
+  font-size: 12pt;
   transition-duration: 0.4s;
   margin-top: 25px;
-  display: inline-block;
+  padding: 2px;
   width: 19%;
-  height: 65px;
+}
+
+.vertical_block{
+  display:block;
 }
 
 .button:hover{
@@ -55,8 +57,9 @@
   border: 2px solid #37a8db;
   background-color: #37a8db;
   text-align: center;
-  font-size: 13pt;
+  font-size: 12pt;
   color: white;
   overflow: hidden;
   width: 19%;
+  margin: 0px;
 }
