@@ -1,0 +1,50 @@
+.main{
+  font-family: 'Open Sans', sans-serif;
+  max-widht: 960px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.covered{
+  border: 1px solid #F5F5F5;
+}
+
+.title_1{
+  font-size: 300%;
+  color: #1946ba;
+  margin-top: 25px;
+  margin-bottom: 25px;
+    }
+    
+.title_2{
+  font-size: 200%;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+    }
+
+.quote {
+  border-left: 2px solid #888;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+
+.button{
+  border-radius: 2px;
+  border: 2px solid #ec0b43;
+  background-color: #ec0b43;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12pt;
+  transition-duration: 0.4s;
+  margin-top: 25px;
+  display: inline-block;
+  width: 20%;
+}
+
+.button:hover{
+  background-color: white;
+  color: black;
+  border: 2px solid #ec0b43;
+}
