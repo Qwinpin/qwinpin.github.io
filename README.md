@@ -4,5 +4,5 @@ Sokhin Timur
 
 qwinpin@gmail.com
 
-<qwinpin.github.io/hw1/hw1.html>
+[HW1](qwinpin.github.io/hw1/hw1.html)
 
