@@ -235,7 +235,7 @@ chart = function(){
     filt_data = data_me();
 
     var margin = {top: 50, bottom: 10, left:50, right: 40};
-    var width = 900 - margin.left - margin.right;
+    var width = 700 - margin.left - margin.right;
     var bar_height = 15;
     var height = bar_height*filt_data.length - margin.top - margin.bottom;
  
@@ -257,7 +257,7 @@ chart = function(){
         .enter().append('g')
             .attr('transform', function(d, i) { return "translate(0," + i * bar_height + ")"; });
 
-    bar.append('rect')
+    bar.append('rect').transition().duration(1000)
         .attr('width', function(d) { return xScale(d.population); })
         .attr('height', bar_height - 1)
         .attr('x', 150);
@@ -266,6 +266,10 @@ chart = function(){
         .text(function(d){
             return d.name;
         })
+        .attr('y', function(d, i){
+            return i + 8;
+        })
+        .attr('class', 'lable');
 
     
     style2();
@@ -274,7 +278,7 @@ chart = function(){
 chart_update = function(){
     filt_data = data_me(year);
     var margin = {top: 50, bottom: 10, left:50, right: 40};
-    var width = 900 - margin.left - margin.right;
+    var width = 700 - margin.left - margin.right;
     var bar_height = 15;
     var height = bar_height*filt_data.length - margin.top - margin.bottom;
     var xScale = d3.scaleLinear().range([0, width]);
@@ -289,24 +293,41 @@ chart_update = function(){
     xScale.domain([min, max]);
     yScale.domain(filt_data.map(function(d) { return d.name; }));
     
-    var bars = svg.selectAll('g')
+    var old_bar = svg.selectAll('g')
         .data(filt_data);
-    
 
-    var obars = bars.select('rect')
+    old_bar.select('rect').transition().duration(200)
         .attr('width', function(d) { return xScale(d.population); })
-    var otext = bars.select('text')
-        .text('6');
+        .attr('height', bar_height - 1)
+        .attr('x', 150);
 
-    bars.exit().remove();
+    old_bar.select('text')
+        .text(function(d){
+            return d.name;
+        })
+        .attr('class', 'lable');
 
-    bars.enter().append('g')
-        .attr('transform', function(d, i) { return "translate(0," + i * bar_height + ")"; })
-            .append('rect')
-                .attr('width', function(d) { return xScale(d.population); })
-                .attr('height', bar_height - 1)
-                .attr('x', 150);
-    style2();
+    old_bar.exit().transition().duration(200).remove();
+    old_bar.selectAll('text').remove();
+
+    var new_bar = svg.selectAll('g')
+        .data(filt_data);
+
+    new_bar.enter().append('g').attr('transform', function(d, i) { return "translate(0," + i * bar_height + ")"; })
+        .append('rect').transition().duration(1000)
+        .attr('fill', getRandomColor)
+        .attr('width', function(d) { return xScale(d.population); })
+        .attr('height', bar_height - 1)
+        .attr('x', 150);
+
+    var new_text = svg.selectAll('g').append('text')
+        .text(function(d){
+            return d.name;
+        })
+        .attr('y', function(d, i){
+            return i + 8;
+        })
+        .attr('class', 'lable');
 }
 
 data_me = function(year = 1995){
