@@ -1,5 +1,37 @@
+.lable{
+    font-size:12px;
+}
+.bar {
+    fill: steelblue;
+}
+.body{
+    color: #716a6e;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+.row2{
+    background-color: #6c939F;
+}
+.row1{
+    background-color: #457585;
+}
 .row{
+    color: #752740;
     background-color: white;
-    font-size: 15px;
     text-align: center;
 }
+
+.row:hover{
+    background-color: green;
+}
+
+.cell{
+    font-size:15px;
+    width: 100px;
+}
+
+.slider{
+    width: 600px;
+    color: blue;
+}
+

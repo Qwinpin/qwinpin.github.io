@@ -7,18 +7,24 @@
     <script src="d3/d3.min.js"></script>
     <script  src="js.js"></script>
 </head>
-<body>
+<body class = 'body'>
+    <div>
     <input type="radio" name="gender" value="agg" onclick = 'aggregate(true)'> Agg<br>
     <input type="radio" name="gender" value="noagg" onclick = 'aggregate(false)' checked> noagg<br>
-    <input type="range" name="points" min="1995" max="2012" step="1" value="0"
-    id="slider-time" oninput="">
+    </div>
+    <div>
+    <p style = 'display: inline-block'>1995</p>
+    <input type="range" name="points" min="1995" max="2012" step="1" value="0" class = 'slider'
+        id="slider" oninput="change_date(this.value)">
+    <p style = 'display: inline-block'>2012</p>
+    </div>
     <script>open_json3()</script>
     <lable style = 'display:inline-block'>
-        <input style = 'display:inline-block' type="checkbox" name="cont1" value="Americas" onchange = 'update2()'> Americas
-        <input style = 'display:inline-block' type="checkbox" name="cont2" value="Africa" onchange = 'update2()'> Africa 
-        <input style = 'display:inline-block' type="checkbox" name="cont3" value="Asia" onchange = 'update2()'> Asia 
-        <input style = 'display:inline-block' type="checkbox" name="cont4" value="Europe" onchange = 'update2()'> Europe 
-        <input style = 'display:inline-block' type="checkbox" name="cont5" value="Oceania" onchange = 'update2()'> Oceania 
+        <input style = 'display:inline-block' type="checkbox" name="cont1" value="Americas" onchange = 'chart_update()'> Americas
+        <input style = 'display:inline-block' type="checkbox" name="cont2" value="Africa" onchange = 'chart_update()'> Africa 
+        <input style = 'display:inline-block' type="checkbox" name="cont3" value="Asia" onchange = 'chart_update()'> Asia 
+        <input style = 'display:inline-block' type="checkbox" name="cont4" value="Europe" onchange = 'chart_update()'> Europe 
+        <input style = 'display:inline-block' type="checkbox" name="cont5" value="Oceania" onchange = 'chart_update()'> Oceania 
     </lable>
 </body>
 </html>
