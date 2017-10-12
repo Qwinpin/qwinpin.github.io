@@ -6,25 +6,46 @@
     <link rel="stylesheet" href="style.css?version=1s">
     <script src="d3/d3.min.js"></script>
     <script  src="js.js"></script>
+    <script>open_json3()</script>
 </head>
 <body class = 'body'>
     <div>
-    <input type="radio" name="gender" value="agg" onclick = 'aggregate(true)'> Agg<br>
-    <input type="radio" name="gender" value="noagg" onclick = 'aggregate(false)' checked> noagg<br>
+        <p style = 'display:inline-block'>Type of visualisation</p>
+        <input type="radio" name="Table" value="Table" onclick = 'set_show("table")'> Table
+        <input type="radio" name="Table" value="Bar" onclick = 'set_show("bar")' checked> Bar<br>
     </div>
     <div>
-    <p style = 'display: inline-block'>1995</p>
-    <input type="range" name="points" min="1995" max="2012" step="1" value="0" class = 'slider'
-        id="slider" oninput="change_date(this.value)">
-    <p style = 'display: inline-block'>2012</p>
+        <p style = 'display:inline-block'>Aggregate</p>
+        <input type="radio" name="Agg" value="agg" onclick = 'aggregate(true)'> With countries
+        <input type="radio" name="Agg" value="noagg" onclick = 'aggregate(false)' checked> None<br>
     </div>
-    <script>open_json3()</script>
+    <div>
+        <p style = 'display:inline-block'>Data to show</p>
+        <input type="radio" name="Data" value="popu" onclick = 'set_criteria("population")' checked> Population
+        <input type="radio" name="Data" value="gdp" onclick = 'set_criteria("gdp")'> GDP
+        <input type="radio" name="Data" value="gdp" onclick = 'set_criteria("life_expectancy")'> Life expectancy<br>
+    </div>
+    <div>
+        <p style = 'display:inline-block'>Sort by</p>
+        <input type="radio" name="sort" value="popu" onclick = 'set_sort("population")'> Population
+        <input type="radio" name="sort" value="name" onclick = 'set_sort("name")' checked> Name
+        <input type="radio" name="sort" value="gdp" onclick = 'set_sort("gdp")'> GDP<br>
+    </div>
+    <div>
+        <p style = 'display:inline-block'>Date:</p>
+        <p style = 'display: inline-block'>1995</p>
+        <input type="range" name="points" min="1995" max="2012" step="1" value="0" class = 'slider'
+        id="slider" oninput="change_date(this.value)">
+        <p style = 'display: inline-block'>2012</p>
+    </div>
     <lable style = 'display:inline-block'>
-        <input style = 'display:inline-block' type="checkbox" name="cont1" value="Americas" onchange = 'chart_update()'> Americas
-        <input style = 'display:inline-block' type="checkbox" name="cont2" value="Africa" onchange = 'chart_update()'> Africa 
-        <input style = 'display:inline-block' type="checkbox" name="cont3" value="Asia" onchange = 'chart_update()'> Asia 
-        <input style = 'display:inline-block' type="checkbox" name="cont4" value="Europe" onchange = 'chart_update()'> Europe 
-        <input style = 'display:inline-block' type="checkbox" name="cont5" value="Oceania" onchange = 'chart_update()'> Oceania 
+        <input style = 'display:inline-block' type="checkbox" name="cont1" value="Americas" onchange = 'updater()'> Americas
+        <input style = 'display:inline-block' type="checkbox" name="cont2" value="Africa" onchange = 'updater()'> Africa 
+        <input style = 'display:inline-block' type="checkbox" name="cont3" value="Asia" onchange = 'updater()'> Asia 
+        <input style = 'display:inline-block' type="checkbox" name="cont4" value="Europe" onchange = 'updater()'> Europe 
+        <input style = 'display:inline-block' type="checkbox" name="cont5" value="Oceania" onchange = 'updater()'> Oceania 
     </lable>
+    <div id = 'forbar'></div>
+    <div id = 'fortable'></div>
 </body>
 </html>
