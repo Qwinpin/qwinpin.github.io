@@ -1,5 +1,41 @@
-.row{
-    background-color: white;
+.lable{
+    font-size:10px;
+    text-align: right;
+    color: #ffffff;
+    fill: #dddddd;
+}
+.bar {
+    fill: steelblue;
+}
+.body{
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
+    background-color: #1f1f1f;
+}
+.row2{
+    background-color: #6c939F;
+}
+.row1{
+    background-color: #457585;
+}
+.row{
+    color: #008a8a;
+    background-color: white;
     text-align: center;
 }
+
+.row:hover{
+    background-color: green;
+}
+
+.cell{
+    font-size:15px;
+    width: 100px;
+}
+
+.slider{
+    width: 300px;
+    color: blue;
+}
+
