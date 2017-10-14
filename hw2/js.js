@@ -58,19 +58,6 @@ change_date = function(value){
     updater();
 }
 
-form = function(key, data){
-    switch (key){
-        case 'gdp':
-            return d3.format('.4s')(data);
-        case 'life_expectancy':
-            return d3.format('.3g')(data);
-        case 'population':
-            return d3.format(',')(data);
-        default:
-            return data;
-    }
-}
-
 style = function(){
     var t = d3.selectAll('tr.row');
     t.style("background-color", function(d, i) { 
@@ -250,9 +237,9 @@ data_me = function(year = 1995){
                     obj.life_expectancy = data[i]['years'][j]['life_expectancy'];
                     if (show == 'bar'){
                         obj.population = data[i]['years'][j][crit];
-                    }
-                    obj.population2 = data[i]['years'][j]['population'];
-                    obj.year = data[i]['years'][j]['year'];
+                    }else{
+                        obj.population = data[i]['years'][j]['population'];
+                        obj.year = data[i]['years'][j]['year'];}
                 }
             }
         }
@@ -320,16 +307,6 @@ show2 = function (){
         .text(function(d){
             return d;
         })
-        .on('click', function(header, i) {
-            tbody.selectAll("tr").sort(function(a, b) {
-                if (header == '1gdp'){
-                    return Number(a[header]) - Number(b[header]);
-                } else{
-                    return d3.descending(a[header], b[header]);
-                }
-            });
-            style();
-        });
 
         var rows = tbody.selectAll('tr.row')
             .data(n)
