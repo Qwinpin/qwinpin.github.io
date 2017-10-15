@@ -30,21 +30,26 @@ SVG provides simplicity of animation, simplifies the scaling of graphic objects
 HTML provides easy work with text, full use of CSS
 In particular, it is extremely difficult to provide a normal display of textual information in the SVG block, but it is easy to provide an animated change of graphical elements
 
-6.1.
+7.1.
 The use of visualization is necessary when demonstrating large amounts of data without applying methods of processing and obtaining numerical conclusions. It is also necessary for demonstrating some processes / data to non-specialists who can't understand raw data.
 
-6.2.
+7.2.
 Interactivity allows you to demonstrate the dynamics of any processes.
 
-6.3.
+7.3.
 Sometimes it is better to demonstrate a numerical value or some expert conclusion
 Visualization gives an understanding of some processes, but not the exact meaning
 
-6.4.
+7.4.
 ?
 
-6.5.
+7.5
+a - correlation
+b - level of abstraction
+с - sequence
+
+7.6
 Position, shape, hue, orientation, texture
 
-6.7
-Position, size, lightness, texture
+7.7
+Position, size, lightness
