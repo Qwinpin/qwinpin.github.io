@@ -259,20 +259,30 @@ data_me = function(year = 1995){
     if (agg){
         var aggg = d3.nest()
             .key(function(d) {return d.continent;})
+            .rollup(function(v) { return {
+                count: v.length,
+                total_pop: d3.sum(v, function(d) { return d.population; }),
+                sum_gdp: d3.sum(v, function(d) { return d.gdp; }),
+                avg_life: d3.mean(v, function(d) { return d.life_expectancy; })}})
             .entries(filt_data);
-        for (var i in aggg){
-            aggg[i].values.sort(function(a, b) {
-                if (sort == 'name'){
-                    return d3.ascending(a[sort], b[sort]);
-                } else{
-                    return d3.descending(a[sort], b[sort]);
-                }
-            })
-            var list = aggg[i].values;
-            for (var j in list){
-                agg_data.push(list[j]);
-            }
+        console.log(aggg[0]['key'])
+        for (i in aggg){
+            var obj = {}
+            obj.name = aggg[i].key;
+            obj.gdp = aggg[i].value.sum_gdp;
+            obj.life_expectancy = aggg[i].value.avg_life;
+            obj.population = aggg[i].value.total_pop;
+            agg_data.push(obj);
         }
+        console.log(agg_data)
+        agg_data.sort(function(a, b) {
+            if (sort == 'name'){
+                return d3.ascending(a[sort], b[sort]);
+            } else{
+                return d3.descending(a[sort], b[sort]);
+            }
+        })
+        console.log(aggg);
         filt_data = agg_data;
     }
     console.log(filt_data);
@@ -294,7 +304,11 @@ form = function(key, data){
 
 show2 = function (){
     n = data_me(year);
-    var columns = ['name', 'continent', 'gdp', 'life_expectancy', 'population', 'year'];
+    if (agg){
+        var columns = ['name', 'life_expectancy', 'gdp', 'population'];
+    } else{
+        var columns = ['name', 'continent', 'gdp', 'life_expectancy', 'population', 'year'];
+    }
 
     var table = d3.select('body').select('#fortable').append('table');
     var thead = table.append('thead').attr('class', 'thead');
@@ -328,8 +342,20 @@ show2 = function (){
 
 update2 = function() {
     filt_data = data_me(year);
-    var columns = ['name', 'continent', 'gdp', 'life_expectancy', 'population', 'year'];
-    
+    if (agg){
+        var columns = ['name', 'gdp', 'life_expectancy', 'population'];
+    } else{
+        var columns = ['name', 'continent', 'gdp', 'life_expectancy', 'population', 'year'];
+    }
+
+    var head = d3.select('thead').select('tr').selectAll('th').data(columns)
+        .text(function(d){return d});
+    head.exit().remove();
+    var new_head = d3.select('thead').select('tr').selectAll('th').data(columns)
+        .enter()
+            .append('th')
+            .text(function(d){return d});
+
     //god, i DONT KNOW why does it work properly only with loop
     for(var i = 0; i < 2; i++){
         var rows = d3.select('table').select('tbody').selectAll('tr.row')
