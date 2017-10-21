@@ -23,11 +23,11 @@ function handlover(d){
 }
 
 function handlout(d){
-    var rect = d3.select(this).transition().duration(1000)
+    var rect = d3.select(this).transition().duration(5000)
         .attr('fill', '#8d8d8e')
     rect.attr('width', (rect_size))
     rect.attr('height', (rect_size))
-        .style('stroke-width', 1);
+        .style('stroke-width', rect_size/100);
 }
 
 function space(){
@@ -35,13 +35,13 @@ function space(){
     var width = svg.attr('width');
     var height = svg.attr('height');
 
-    window.rect_size = width/30;
+    window.rect_size = width/50;
 
     var rect_data = [];
     var x = 0;
-    for (i=0; i<30; i++){
+    for (i=0; i<50; i++){
         var y = 0;
-        for (j=0; j<30; j++){
+        for (j=0; j<50; j++){
             rect_data.push([x, y]);
             y = y + rect_size;
         }
@@ -70,7 +70,7 @@ function create_rect_field(){
             })
             .attr('border', 1)
                 .style('stroke', 'white')
-                .style('stroke-width', 1)
+                .style('stroke-width', rect_size/100)
             .on('mouseover', handlover)
             .on('mouseout', handlout);
 }
