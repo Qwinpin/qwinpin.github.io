@@ -12,11 +12,12 @@ class Map {
      * Function that clears the map
      */
     clearMap() {
-        var color = d3.selectAll('path')
+        var color = d3.selectAll('.countries')
             .classed('host', false);
         color.classed('team', false);
         color.classed('countries', true);
         var ci = d3.selectAll('circle').remove();
+
         
         // ******* TODO: PART V*******
         // Clear the map of any colors/markers; You can do this with inline styling or by
@@ -76,23 +77,7 @@ class Map {
                     cy
                 ]) + ")";
             });
-        // ******* TODO: PART V *******
-
-        // Add a marker for the winner and runner up to the map.
-
-        // Hint: remember we have a conveniently labeled class called .winner
-        // as well as a .silver. These have styling attributes for the two
-        // markers.
-
-
-        // Select the host country and change it's color accordingly.
-
-        // Iterate through all participating teams and change their color as well.
-
-        // We strongly suggest using CSS classes to style the selected countries.
-
-
-        // Add a marker for gold/silver medalists
+        
     }
 
     /**
@@ -112,6 +97,12 @@ class Map {
             .attr('class', 'countries')
             .attr('id', function(d){
                 return d.id;})
+            .attr('d', geoPath);
+
+        g.append('path')
+            .attr('id', 'grid')
+            .datum(d3.geoGraticule().stepMinor([10, 10]))
+            .attr('class', 'graticule')
             .attr('d', geoPath);
         //(note that projection is a class member
         // updateMap() will need it to add the winner/runner_up markers.)

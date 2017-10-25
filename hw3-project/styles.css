@@ -1,3 +1,10 @@
+.graticule{
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .1;
+    stroke-dasharray: 2, 1;
+}
+
 .bar:hover {
     fill: #00CCFF !important;
 }
