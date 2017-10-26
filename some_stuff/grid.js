@@ -27,7 +27,7 @@ function space(del){
 
 function create_rect_field(){
     window.fo = d3.format(".0f");
-    var data = space(150);
+    var data = space(75);
     var place = d3.select('svg').selectAll('rect').data(data)
         .enter()
         .append('rect')
