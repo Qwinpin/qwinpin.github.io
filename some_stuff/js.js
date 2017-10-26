@@ -136,7 +136,7 @@ function space(){
     var width = svg.attr('width');
     var height = svg.attr('height');
 
-    window.rect_size = width/200;
+    window.rect_size = width/100;
 
     var rect_data = [];
     var x = 0;
