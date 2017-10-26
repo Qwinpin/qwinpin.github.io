@@ -98,7 +98,7 @@ class Map {
             .attr('id', function(d){
                 return d.id;})
             .attr('d', geoPath);
-
+        console.log(topojson.feature(world, world.objects.countries).features)
         g.append('path')
             .attr('id', 'grid')
             .datum(d3.geoGraticule().stepMinor([10, 10]))
