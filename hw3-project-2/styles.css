@@ -169,6 +169,10 @@ header {
     stroke-width: 4px;
 }
 
+.label{
+    fill: black;
+}
+
 .selectedLabel {
     fill: #be2714;
     font-weight: bolder;

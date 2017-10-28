@@ -6,7 +6,7 @@ class Table {
     constructor(teamData, treeObject) {
 
         //Maintain reference to the tree Object; 
-        this.tree = null; 
+        this.tree = treeObject; 
 
         // Create list of all elements that will populate the table
         // Initially, the tableElements will be identical to the teamData
@@ -186,6 +186,7 @@ class Table {
 
         var columns = ['Team', 'Goals', 'Round/Result', 'Wins', 'Losses', 'Total Games'];
         var self = this;
+        
         var body = d3.select('tbody');
         //console.log(data)
         var tr_exit = body.selectAll('tr')
@@ -203,6 +204,13 @@ class Table {
             .on('click', function(d, i){
                 //console.log(i)
                 self.updateList(d, i);
+            })
+            .on('mouseover', function(d){
+                console.log(d)
+                self.update_tree(d);
+            })
+            .on('mouseout', function(d){
+                self.tree.clearTree(d);
             })
         var tr_exit = body.selectAll('tr').data(data);
         tr_exit.exit().remove();
@@ -405,6 +413,10 @@ class Table {
         this.updateTable();
         // ******* TODO: PART IV *******
 
+    }
+
+    update_tree(row){
+        this.tree.updateTree(row);
     }
 
 
