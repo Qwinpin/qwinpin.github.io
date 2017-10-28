@@ -17,13 +17,13 @@
 }
 
 .madeGoal_f{
-    fill: none;
+    fill: white;
     stroke-width: 3px;
     stroke: blue;
 }
 
 .concGoal_f{
-    fill: none;
+    fill: white;
     stroke-width: 3px;
     stroke: red;
 }

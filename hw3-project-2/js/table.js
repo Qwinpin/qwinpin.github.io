@@ -56,7 +56,7 @@ class Table {
     createTable() {
 
         // ******* TODO: PART II *******
-               
+        var self = this;
         //Update Scale Domains
         console.log(this.teamData)
         var table = d3.select('#matchTable');
@@ -76,8 +76,10 @@ class Table {
         
         window.goalScale = d3.scaleLinear()
             .domain([0, maxGoals])
+            .range([10, this.cell.width+30]);
+        window.AxisScale = d3.scaleLinear()
+            .domain([0, maxGoals])
             .range([0, this.cell.width+30]);
-
         window.gameScale = d3.scaleLinear()
             .domain([0, maxGames])
             .range([0, this.cell.width]);
@@ -88,9 +90,10 @@ class Table {
             .range([d3.rgb("#ece2f0"), d3.rgb('#016450')]);
 
         console.log(gameScale(maxGames-3))
-        var xAxis = d3.axisBottom(goalScale);
+        var xAxis = d3.axisBottom(AxisScale);
         d3.select('#goalHeader').append('svg')
             .attr('width', this.cell.width+40)
+            .attr('height', this.cell.height)
             .append('g')
                 .style('font', '8px sans-serif')
                 .attr('transform', 'translate(' + 5 + ',' + 5 + ')')
@@ -99,6 +102,64 @@ class Table {
         window.tableElements = this.teamData.slice(0);
         window.data = tableElements;
         window.open_row = [];
+        var sortAscending = false;
+        var headers = d3.select('thead').select('.head').selectAll('td');
+        headers
+            .on('click', function(){
+                self.collapseList();
+                
+                var temp = data;
+                var dn = d3.select(this).text();
+                console.log(dn)
+                temp.sort(function(a, b) {
+                    if (dn == 'Team'){
+                        if (sortAscending){
+                            return d3.ascending(a.key, b.key)
+                        } else {
+                            return d3.descending(a.key, b.key)
+                        }
+                    }
+                    if (dn == 'Wins'){
+                        if (sortAscending){
+                            return d3.ascending(a.value.Wins, b.value.Wins)
+                        } else {
+                            return d3.descending(a.value.Wins, b.value.Wins)
+                        }
+                    }
+                    if (dn == 'Losses'){
+                        if (sortAscending){
+                            return d3.ascending(a.value.Losses, b.value.Losses)
+                        } else {
+                            return d3.descending(a.value.Losses, b.value.Losses)
+                        }
+                    }
+                    if (dn == 'Total Games'){
+                        if (sortAscending){
+                            return d3.ascending(a.value.TotalGames, b.value.TotalGames)
+                        } else {
+                            return d3.descending(a.value.TotalGames, b.value.TotalGames)
+                        }
+                    }
+                    if (dn == 'Goals'){
+                        if (sortAscending){
+                            return d3.ascending(Math.abs(a.value['Delta Goals']), Math.abs(b.value['Delta Goals']))
+                        } else {
+                            return d3.descending(Math.abs(a.value['Delta Goals']), Math.abs(b.value['Delta Goals']))
+                        }
+                    }
+                    if (dn == 'Round/Result'){
+                        if (sortAscending){
+                            return d3.ascending(a.value.Result.ranking, b.value.Result.ranking)
+                        } else {
+                            return d3.descending(a.value.Result.ranking, b.value.Result.ranking)
+                        }
+                    }
+                });
+                sortAscending = !sortAscending;
+                data = temp;
+                self.updateTable();
+                //console.log(data)
+            })
         
         // Create the x axes for the goalScale.
 
@@ -118,85 +179,40 @@ class Table {
      * Updates the table contents with a row for each element in the global variable tableElements.
      */
     updateTable() {
+        
         // ******* TODO: PART III *******
         //Create table rows
-        //console.log(tableElements)
+        console.log(data)
+
         var columns = ['Team', 'Goals', 'Round/Result', 'Wins', 'Losses', 'Total Games'];
         var self = this;
         var body = d3.select('tbody');
-        var sortAscending = true;
-        window.headers = d3.select('thead').select('.head').selectAll('td');
-        headers.data(columns)
-            .on('click', function(d){
-                self.collapseList();
-                sortAscending = !sortAscending;
-                body.selectAll('tr').sort(function(a, b) {
-                    if (d == 'Team'){
-                        if (sortAscending){
-                            return d3.ascending(a.key, b.key)
-                        } else {
-                            return d3.descending(a.key, b.key)
-                        }
-                    }
-                    if (d == 'Wins'){
-
-                        if (sortAscending){
-                            return d3.ascending(a.value.Wins, b.value.Wins)
-                        } else {
-                            return d3.descending(a.value.Wins, b.value.Wins)
-                        }
-                    }
-                    if (d == 'Losses'){
-
-                        if (sortAscending){
-                            return d3.ascending(a.value.Losses, b.value.Losses)
-                        } else {
-                            return d3.descending(a.value.Losses, b.value.Losses)
-                        }
-                    }
-                    if (d == 'Total Games'){
-
-                        if (sortAscending){
-                            return d3.ascending(a.value.TotalGames, b.value.TotalGames)
-                        } else {
-                            return d3.descending(a.value.TotalGames, b.value.TotalGames)
-                        }
-                    }
-                    if (d == 'Goals'){
-
-                        if (sortAscending){
-                            return d3.ascending(a.value['Delta Goals'], b.value['Delta Goals'])
-                        } else {
-                            return d3.descending(a.value['Delta Goals'], b.value['Delta Goals'])
-                        }
-                    }
-                    if (d == 'Round/Result'){
-
-                        if (sortAscending){
-                            return d3.ascending(a.value.Result.ranking, b.value.Result.ranking)
-                        } else {
-                            return d3.descending(a.value.Result.ranking, b.value.Result.ranking)
-                        }
-                    }
-                });
+        //console.log(data)
+        var tr_exit = body.selectAll('tr')
+            .data(data, function(d){
+                return d;
             })
-        console.log(data)
+            .attr('class', 'row')
         var tr = body.selectAll('tr')
             .data(data, function(d){
                 return d;
             })
             .enter()
             .append('tr')
-            .attr('class', 'row');
+            .attr('class', 'row')
+            .on('click', function(d, i){
+                //console.log(i)
+                self.updateList(d, i);
+            })
         var tr_exit = body.selectAll('tr').data(data);
         tr_exit.exit().remove();
 
         //let tdr = tr.selectAll("td").data(function(d){ return d });
-        
+
         var td = body.selectAll('tr').selectAll('td');
         td
-            .data(function(row, i){
-                var name = {'i': i, 'open': false, 'type': row.value.type, 'vis': 'text1', 'value': row.key};
+            .data(function(row){
+                var name = {'open': false, 'type': row.value.type, 'vis': 'text1', 'value': row.key};
                 var goals = {'type': row.value.type, 'vis': 'goal', 'value': {'made': row.value['Goals Made'], 'conc': row.value['Goals Conceded']}};
                 var res = {'type': row.value.type, 'vis': 'text2', 'value': row.value.Result.label};
                 var win = {'type': row.value.type, 'vis': 'bar', 'value': row.value.Wins};
@@ -214,15 +230,23 @@ class Table {
             .filter(function(d){
                 return d.vis == c;
             })
-            console.log(c);
+            //console.log(c);
             switch(c){
                 case 'text1':{
                     name.text(function(d){
-                        return d.value;
+                        if (d.type == 'aggregate'){
+                            return d.value;
+                        } else{
+                            return 'x' + d.value;
+                        }
                         })
-                    name.on('click', function(d){
-                        self.updateList(d);
-                    })
+                        .style('color', function(d){
+                            if (d.type == 'aggregate'){
+                                return 'black';
+                            } else{
+                                return 'grey';
+                            }
+                        })
                     break;
                 }
                 case 'text2':{
@@ -263,7 +287,7 @@ class Table {
                 case 'goal':{
                     name.select('svg').remove();
                     var goal = name.append('svg')
-                        .attr('width', this.cell.width+50)
+                        .attr('width', this.cell.width+100)
                         .attr('height', this.cell.height)
                     
                     goal
@@ -336,32 +360,30 @@ class Table {
                 }
             };
         }
-        td.exit().remove();
-        
-        
     }
 
     /**
      * Updates the global tableElements variable, with a row for each row to be rendered in the table.
      *
      */
-    updateList(i) {
-        // ******* TODO: PART IV *******
+    updateList(i, index) {
+        // ******* TODO: PART IV *******c
+        console.log(i, index)
         if (i.type == 'game'){
             this.updateTable();
         }else{
             if (open_row.indexOf(i.value) == -1){
                 open_row.push(i.value);
-                var began = data.slice(0,(i.i+1));
-                var games = data[i.i].value.games;
-                var end = data.slice((i.i+1))
+                var began = data.slice(0,(index+1));
+                var games = data[index].value.games;
+                var end = data.slice((index+1))
             } else{
                 open_row.splice(open_row.indexOf(i.value), 1);
-                var began = data.slice(0,(i.i+1));
-                var games_number = data[i.i].value.games.length;
+                var began = data.slice(0,(index+1));
+                var games_number = data[index].value.games.length;
                 console.log(games_number)
                 var games = [];
-                var end = data.slice((i.i+games_number+1))
+                var end = data.slice((index+games_number+1))
             }
             console.log(open_row)
             data = (began.concat(games, end));
