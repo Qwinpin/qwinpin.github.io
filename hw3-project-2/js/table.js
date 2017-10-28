@@ -56,7 +56,7 @@ class Table {
     createTable() {
 
         // ******* TODO: PART II *******
-        
+               
         //Update Scale Domains
         console.log(this.teamData)
         var table = d3.select('#matchTable');
@@ -98,6 +98,8 @@ class Table {
 
         window.tableElements = this.teamData.slice(0);
         window.data = tableElements;
+        window.open_row = [];
+        
         // Create the x axes for the goalScale.
 
         //add GoalAxis to header of col 1.
@@ -119,24 +121,82 @@ class Table {
         // ******* TODO: PART III *******
         //Create table rows
         //console.log(tableElements)
+        var columns = ['Team', 'Goals', 'Round/Result', 'Wins', 'Losses', 'Total Games'];
         var self = this;
         var body = d3.select('tbody');
-        var tr = body.selectAll('tr');
-        
-        tr
+        var sortAscending = true;
+        window.headers = d3.select('thead').select('.head').selectAll('td');
+        headers.data(columns)
+            .on('click', function(d){
+                self.collapseList();
+                sortAscending = !sortAscending;
+                body.selectAll('tr').sort(function(a, b) {
+                    if (d == 'Team'){
+                        if (sortAscending){
+                            return d3.ascending(a.key, b.key)
+                        } else {
+                            return d3.descending(a.key, b.key)
+                        }
+                    }
+                    if (d == 'Wins'){
+
+                        if (sortAscending){
+                            return d3.ascending(a.value.Wins, b.value.Wins)
+                        } else {
+                            return d3.descending(a.value.Wins, b.value.Wins)
+                        }
+                    }
+                    if (d == 'Losses'){
+
+                        if (sortAscending){
+                            return d3.ascending(a.value.Losses, b.value.Losses)
+                        } else {
+                            return d3.descending(a.value.Losses, b.value.Losses)
+                        }
+                    }
+                    if (d == 'Total Games'){
+
+                        if (sortAscending){
+                            return d3.ascending(a.value.TotalGames, b.value.TotalGames)
+                        } else {
+                            return d3.descending(a.value.TotalGames, b.value.TotalGames)
+                        }
+                    }
+                    if (d == 'Goals'){
+
+                        if (sortAscending){
+                            return d3.ascending(a.value['Delta Goals'], b.value['Delta Goals'])
+                        } else {
+                            return d3.descending(a.value['Delta Goals'], b.value['Delta Goals'])
+                        }
+                    }
+                    if (d == 'Round/Result'){
+
+                        if (sortAscending){
+                            return d3.ascending(a.value.Result.ranking, b.value.Result.ranking)
+                        } else {
+                            return d3.descending(a.value.Result.ranking, b.value.Result.ranking)
+                        }
+                    }
+                });
+            })
+        console.log(data)
+        var tr = body.selectAll('tr')
             .data(data, function(d){
                 return d;
             })
             .enter()
             .append('tr')
             .attr('class', 'row');
-        tr.exit().remove();
-        //let tdr = tr.selectAll("td").data(function(d){ return d });
+        var tr_exit = body.selectAll('tr').data(data);
+        tr_exit.exit().remove();
 
+        //let tdr = tr.selectAll("td").data(function(d){ return d });
+        
         var td = body.selectAll('tr').selectAll('td');
         td
             .data(function(row, i){
-                var name = {'i': i, 'type': row.value.type, 'vis': 'text1', 'value': row.key};
+                var name = {'i': i, 'open': false, 'type': row.value.type, 'vis': 'text1', 'value': row.key};
                 var goals = {'type': row.value.type, 'vis': 'goal', 'value': {'made': row.value['Goals Made'], 'conc': row.value['Goals Conceded']}};
                 var res = {'type': row.value.type, 'vis': 'text2', 'value': row.value.Result.label};
                 var win = {'type': row.value.type, 'vis': 'bar', 'value': row.value.Wins};
@@ -146,7 +206,7 @@ class Table {
             })
             .enter()
             .append('td');
-        td.exit().remove();
+
         var visual = ['text1', 'text2', 'goal', 'bar'];
         for (var i in visual){
             var c = visual[i];
@@ -211,7 +271,13 @@ class Table {
                             .attr('x', function(d){
                                 return goalScale(Math.min(d.value.made, d.value.conc));
                             })
-                            .attr('y', (this.cell.height/2 - 5))
+                            .attr('y', function(d){
+                                if (d.type == 'aggregate'){
+                                    return (5);
+                                } else{
+                                    return (8);
+                                }
+                            })
                             .attr('width', function(d){
                                 return Math.abs(goalScale(d.value.made) - goalScale(d.value.conc));
                             })
@@ -232,7 +298,7 @@ class Table {
                     goal
                         .append('circle')
                             .attr('cx', function(d){
-                                console.log(goalScale(d.value.made))
+
                                 return goalScale(d.value.made);
                             })
                             .attr('cy', this.cell.height/2)
@@ -270,6 +336,9 @@ class Table {
                 }
             };
         }
+        td.exit().remove();
+        
+        
     }
 
     /**
@@ -278,9 +347,28 @@ class Table {
      */
     updateList(i) {
         // ******* TODO: PART IV *******
-        console.log(i)
-       //tableElements = tableElements.slice(1);
-       this.updateTable();
+        if (i.type == 'game'){
+            this.updateTable();
+        }else{
+            if (open_row.indexOf(i.value) == -1){
+                open_row.push(i.value);
+                var began = data.slice(0,(i.i+1));
+                var games = data[i.i].value.games;
+                var end = data.slice((i.i+1))
+            } else{
+                open_row.splice(open_row.indexOf(i.value), 1);
+                var began = data.slice(0,(i.i+1));
+                var games_number = data[i.i].value.games.length;
+                console.log(games_number)
+                var games = [];
+                var end = data.slice((i.i+games_number+1))
+            }
+            console.log(open_row)
+            data = (began.concat(games, end));
+            console.log(data)
+        //tableElements = tableElements.slice(1);
+            this.updateTable();
+        }
     
         //Only update list for aggregate clicks, not game clicks
         
@@ -291,7 +379,8 @@ class Table {
      *
      */
     collapseList() {
-        
+        data = tableElements;
+        this.updateTable();
         // ******* TODO: PART IV *******
 
     }
