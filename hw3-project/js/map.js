@@ -12,11 +12,12 @@ class Map {
      * Function that clears the map
      */
     clearMap() {
-        var color = d3.selectAll('.countries')
-            .classed('host', false);
+        var color = d3.select('#map').selectAll('.countries');
+        color.attr('class', 'countries')
+        color.classed('host', false);
         color.classed('team', false);
         color.classed('countries', true);
-        var ci = d3.selectAll('circle').remove();
+        d3.selectAll('circle').remove();
 
         
         // ******* TODO: PART V*******
@@ -46,8 +47,8 @@ class Map {
         var i = name.indexOf(winner);
         var win = '#' + iso[i];
         console.log(host, win);
-        var color = d3.select(host)
-            .attr('class', 'host');
+        var color = d3.select('#map').select(host)
+            .attr('class', 'countries host');
         for (i in iso){
             var col = d3.select(('#' + iso[i]))
                 .classed('team', true);
@@ -89,7 +90,9 @@ class Map {
         window.proj = d3.geoConicConformal().scale(150).translate([400, 350]);
         var geoPath = d3.geoPath()
             .projection(proj);
-        var g = d3.select('#map');
+        var g = d3.select('#map')
+            .attr('width', 900)
+            .attr('height', 600);
         g.selectAll('path')
             .data(topojson.feature(world, world.objects.countries).features)
             .enter()
