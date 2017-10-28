@@ -37,7 +37,7 @@ function move(id){
     rect.transition().duration(1000)
         .attr('y', y)
         .attr('x', x)
-        .attr('fill', '#8C0023')
+        .attr('fill', '#F2F2F2')
         .attr('height', rect_size*0.9)
     d3.select(id).moveToFront();
 }
@@ -48,7 +48,7 @@ function back(id){
     var x = Number(rect.attr('x')) +10;
     //var id = rect.attr('id');
     //neib_handout(id, 2);
-    rect.transition().duration(1)
+    rect
         .attr('y', y)
         .attr('x', x)
         //.attr('y', (y+0.1))
@@ -58,9 +58,9 @@ function back(id){
 
 function draw(ids){
     
-    for (i in heart){
+    /*for (i in heart){
         move(heart[i]);
-    }
+    }*/
 
     for (i in ids){
         move(ids[i])
@@ -68,9 +68,9 @@ function draw(ids){
 }
 
 function clear(ids){
-    for (i in heart){
+    /*for (i in heart){
         back(heart[i]);
-    }
+    }*/
 
     for (i in ids){
         back(ids[i])

@@ -27,7 +27,7 @@ function space(del){
 
 function create_rect_field(){
     window.fo = d3.format(".0f");
-    var data = space(75);
+    var data = space(100);
     var place = d3.select('svg').selectAll('rect').data(data)
         .enter()
         .append('rect')
@@ -41,7 +41,7 @@ function create_rect_field(){
                 return d[2];
             })
             .attr('y', function(d){
-                return d[3];
+                return d[3]-5;
             })
             .attr('border', 1)
                 .style('stroke', 'white')
@@ -56,7 +56,7 @@ function perspective(){
     var width = svg.attr('width');
     var height = svg.attr('height');
     var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
-        targetPoints = [[120, -100], [(width-80), -100], [width, height-100], [0, height-100]];
+        targetPoints = [[200, -100], [(width-200), -100], [width, height-120], [0, height-120]];
     var fast = transformed(sourcePoints, targetPoints);
     console.log(fast);
     svg.style('transform', "matrix3d(" + fast + ")");
