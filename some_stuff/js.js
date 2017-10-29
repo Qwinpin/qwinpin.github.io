@@ -322,5 +322,10 @@ function readTextFile(country)
     }
     rawFile.send(null);
 }
+
+function to_id(x, y){
+    return ('#r' + x + 'x' + y);
+}
+
 window.old_ids = []
 window.heart = ['#r12x15','#r11x14','#r10x13','#r9x12','#r8x11','#r7x10','#r6x9','#r6x8','#r6x7','#r7x6','#r8x5','#r9x5','#r10x5','#r11x6','#r12x7','#r13x6','#r14x5','#r15x5','#r16x5','#r17x6','#r18x7','#r18x8','#r18x9','#r17x10','#r16x11','#r15x12','#r14x13','#r13x14']

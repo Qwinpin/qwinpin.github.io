@@ -29,7 +29,7 @@ function handlout(d){
 
 function move(id){
     var rect = d3.select(id);
-    var rand = Math.random() * (3 - 1) + 1;
+    //var rand = Math.random() * (3 - 1) + 1;
 
     var y = Number(rect.attr('y')) -20;
     var x = Number(rect.attr('x')) -10;
@@ -38,7 +38,7 @@ function move(id){
         .attr('y', y)
         .attr('x', x)
         .attr('fill', '#F2F2F2')
-        .attr('height', rect_size*0.9)
+        .attr('height', rect_size*0.7)
     d3.select(id).moveToFront();
 }
 
@@ -56,30 +56,71 @@ function back(id){
         .attr('height', rect_size)
 }
 
-function draw(ids){
-    
-    /*for (i in heart){
-        move(heart[i]);
-    }*/
-
-    for (i in ids){
-        move(ids[i])
+function draw(country){
+    current_country_name = country;
+    if (current_country != map[country]){
+        select_ids = [];
+        for (i in current_country){
+            back(current_country[i])
+        }
+        current_country = map[country];
+        for(i in current_country){
+            move(current_country[i]);
+        }
     }
 }
 
-function clear(ids){
-    /*for (i in heart){
-        back(heart[i]);
-    }*/
+function fill_data(data){
+    var number_squares = current_country.length;
+    
+    var base = data.base;
+    var target = data.cancer;
+    var fill_squares = (fo((target/base)*number_squares));
 
-    for (i in ids){
-        back(ids[i])
+    console.log(number_squares, base, target, fill_squares);
+    if (select_ids.length != 0){
+        for (var i = 0; i < select_ids.length; i++){
+            //var rand = fo(Math.random() * (number_squares - i) + i);
+            //var id = current_country[rand];
+            d3.select(select_ids[i]).transition().duration(1000)
+                .attr('fill', '#F2F2F2');
+        }
+        select_ids = [];
     }
+    for (var i = 0; i < fill_squares; i++){
+        //var rand = fo(Math.random() * (number_squares - i) + i);
+        var id = current_country[i];
+        d3.select(id).transition().duration(3000)
+            .attr('fill', '#550000');
+        select_ids.push(id);
+    }
+    console.log(select_ids)
+}
+
+function data_prepare(){
+    console.log(current_country_name)
+    var show = dataset[current_country_name]['2014'];
+    console.log(show)
+    fill_data(show)
 }
 
 function readTextFile(country)
 {   
-    if (old_ids.length != 0){
+    switch(country){
+        case 'russia': {
+            draw(russia);
+            break;
+        }
+        case 'usa':{
+            draw(usa);
+            break;
+        }
+        default: {
+            console.log('1')
+            break;
+        }
+    }
+    /*if (old_ids.length != 0){
         clear(old_ids);
     }
     file = country + '.txt';
@@ -97,7 +138,9 @@ function readTextFile(country)
             }
         }
     }
-    rawFile.send(null);
+    rawFile.send(null);*/
 }
-window.old_ids = []
-window.heart = ['#r12x15','#r11x14','#r10x13','#r9x12','#r8x11','#r7x10','#r6x9','#r6x8','#r6x7','#r7x6','#r8x5','#r9x5','#r10x5','#r11x6','#r12x7','#r13x6','#r14x5','#r15x5','#r16x5','#r17x6','#r18x7','#r18x8','#r18x9','#r17x10','#r16x11','#r15x12','#r14x13','#r13x14']
+window.current_country_name = '';
+window.select_ids = [];
+window.current_country = '';
+window.old = []
