@@ -113,18 +113,28 @@ class Tree {
      *
      * @param row a string specifying which team was selected in the table.
      */
-    updateTree(row) {
+    updateTree(rows) {
         // ******* TODO: PART VII *******
         var path = d3.selectAll('.link')
             .filter(function(d){
-                return (d.data.data.Team == row.key && d.parent.data.data.Team == row.key)
+                if (rows.value.type == 'aggregate'){
+                    return (d.data.data.Team == rows.key && d.parent.data.data.Team == rows.key)
+                } else{
+                    return (d.data.data.Team == rows.key && d.data.data.Opponent == rows.value.Opponent) || (d.data.data.Team == rows.value.Opponent && d.data.data.Opponent == rows.key)
+                }
             })
         path
             .attr('class', 'link selected')
 
         var label = d3.selectAll('.node').selectAll('text')
             .filter(function(d){
-                return (d.data.data.Team == row.key)
+                if (rows.value.type == 'aggregate'){
+                    return (d.data.data.Team == rows.key)
+                } else{
+                    console.log(d)
+                    return ((d.data.data.Team == rows.key && d.data.data.Opponent == rows.value.Opponent) || 
+                    (d.data.data.Team == rows.value.Opponent && d.data.data.Opponent == rows.key))
+                }
             })
         label
             .attr('class', 'selectedLabel')

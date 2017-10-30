@@ -9,8 +9,8 @@ function space(del){
     var svg = d3.select('svg');
     var width = svg.attr('width');
     var height = svg.attr('height');
-
-    window.rect_size = width/del;
+    svg.attr('x', 0)
+    window.rect_size = 800/del;
 
     var rect_data = [];
     var x = 0;
@@ -28,20 +28,21 @@ function space(del){
 function create_rect_field(){
     window.fo = d3.format(".0f");
     var data = space(100);
-    var place = d3.select('svg').selectAll('rect').data(data)
+    var place = d3.select('#space').append('g').selectAll('rect').data(data)
         .enter()
         .append('rect')
             .attr('fill', 'rgb(31, 30, 34)')
             .attr('id', function(d){
                 return  'r' + fo(d[0]) + 'x' + fo(d[1]);
             })
+            .attr('class', 'rect')
             .attr('width', rect_size)
             .attr('height', rect_size)
             .attr('x', function(d){
-                return d[2];
+                return d[2]+100;
             })
             .attr('y', function(d){
-                return d[3]-5;
+                return d[3]+100;
             })
             .attr('border', 1)
                 .style('stroke', 'white')
@@ -49,22 +50,42 @@ function create_rect_field(){
             .on('mouseover', handlover)
             .on('mouseout', handlout);
     perspective()
+    classing()
+}
+
+function classing(){
+    var names = Object.keys(map);
+    for (i=0; i<100; i++){
+        var y = 0;
+        for (j=0; j<(100/1.5); j++){
+            var id = '#r' + i + 'x' + j;
+            for (k in names){
+                if (map[names[k]].indexOf(id) != -1){
+                    d3.select(id)
+                        .classed(names[k], true);
+                }
+            }
+        }
+    }
+    console.log('done');
 }
 
 function perspective(){
-    var svg = d3.select('svg');
+    var svg = d3.select('#space');
     var width = svg.attr('width');
     var height = svg.attr('height');
     var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
-        targetPoints = [[200, -100], [(width-200), -100], [width, height-120], [0, height-120]];
+        targetPoints = [[300, 0], [(width-100), 0], [width, height-200], [0, height-200]];
     var fast = transformed(sourcePoints, targetPoints);
     console.log(fast);
+    svg.style('transform-origin', "15% 0%");
     svg.style('transform', "matrix3d(" + fast + ")");
+    
     console.log(svg);
 }
 
 function transformed(sourcePoints, targetPoints) {
-    var fr = d3.format(".6f");
+    var fr = d3.format(".4f");
 
     for (var a = [], b = [], i = 0, n = sourcePoints.length; i < n; ++i) {
         var s = sourcePoints[i], t = targetPoints[i];

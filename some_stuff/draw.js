@@ -56,47 +56,6 @@ function back(id){
         .attr('height', rect_size)
 }
 
-function draw(country){
-    current_country_name = country;
-    if (current_country != map[country]){
-        select_ids = [];
-        for (i in current_country){
-            back(current_country[i])
-        }
-        current_country = map[country];
-        for(i in current_country){
-            move(current_country[i]);
-        }
-    }
-}
-
-function fill_data(data){
-    var number_squares = current_country.length;
-    
-    var base = data.base;
-    var target = data.cancer;
-    var fill_squares = (fo((target/base)*number_squares));
-
-    console.log(number_squares, base, target, fill_squares);
-    if (select_ids.length != 0){
-        for (var i = 0; i < select_ids.length; i++){
-            //var rand = fo(Math.random() * (number_squares - i) + i);
-            //var id = current_country[rand];
-            d3.select(select_ids[i]).transition().duration(1000)
-                .attr('fill', '#F2F2F2');
-        }
-        select_ids = [];
-    }
-    for (var i = 0; i < fill_squares; i++){
-        //var rand = fo(Math.random() * (number_squares - i) + i);
-        var id = current_country[i];
-        d3.select(id).transition().duration(3000)
-            .attr('fill', '#550000');
-        select_ids.push(id);
-    }
-    console.log(select_ids)
-}
-
 function data_prepare(){
     console.log(current_country_name)
     var show = dataset[current_country_name]['2014'];
@@ -104,43 +63,70 @@ function data_prepare(){
     fill_data(show)
 }
 
-function readTextFile(country)
-{   
-    switch(country){
-        case 'russia': {
-            draw(russia);
-            break;
-        }
-        case 'usa':{
-            draw(usa);
-            break;
-        }
-        default: {
-            console.log('1')
-            break;
-        }
+function fill_data(data){
+    var number_squares = map[current_country_name].length;
+    
+    var base = data.base;
+    var target = data.cancer;
+    var fill_squares = (fo((target/base)*number_squares));
+
+    console.log(number_squares, base, target, fill_squares);
+    if (select_ids){
+            var rect = d3.selectAll('.data');
+            rect
+                .classed('data', false)
+                .transition().duration(2000)
+                .attr('fill', '#F2F2F2')
+                .attr("transform", "translate(0,0)");
+            select_ids = false;
     }
-    /*if (old_ids.length != 0){
-        clear(old_ids);
+    for (var i = 0; i < fill_squares; i++){
+        //var rand = fo(Math.random() * (number_squares - i) + i);
+        var id = map[current_country_name][i];
+        var rect = d3.select(id);
+        rect
+            .classed('data', true)
+            .transition().duration(1000)
+            .attr('fill', '#550000')
+            .attr("transform", "translate(-45,-45)");
+        select_ids = true;
     }
-    file = country + '.txt';
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var ids = rawFile.responseText.split(',');
-                old_ids = ids;
-                draw(ids);
-            }
-        }
-    }
-    rawFile.send(null);*/
+    console.log(select_ids)
 }
+
+function get_neib(id){
+    var reg = /\d+/g;
+    return id.match(reg);
+}
+
+function draw(country){
+    //current_country_name = country;
+    if (select_ids){
+        var rect = d3.selectAll('.data');
+        rect.transition().duration(2000)
+            .attr('fill', 'rgb(31, 30, 34)')
+            .attr("transform", "translate(0,0)");
+        select_ids = false;
+    }
+    if (country != current_country_name){
+        if (current_country_name.length != 0){
+            d3.selectAll(('.' + current_country_name)).transition().duration(1000)
+                .attr('fill', 'rgb(31, 30, 34)')
+                .attr("transform", "translate(0,0)");
+        }
+        current_country_name = country;
+        d3.selectAll(('.' + current_country_name)).transition().duration(1000)
+            .attr('fill', '#F2F2F2')
+            .attr("transform", "translate(-10,-20)");
+    } else{
+        d3.selectAll(('.' + current_country_name)).transition().duration(1000)
+            .attr('fill', 'rgb(31, 30, 34)')
+            .attr("transform", "translate(0,0)");
+        current_country_name = '';
+    }
+}
+
 window.current_country_name = '';
-window.select_ids = [];
+window.select_ids = false;
 window.current_country = '';
 window.old = []
