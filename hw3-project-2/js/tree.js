@@ -132,8 +132,16 @@ class Tree {
                     return (d.data.data.Team == rows.key)
                 } else{
                     console.log(d)
+                    var r1 = '';
+                    var r2 = '';
+                    if ((Object.keys(d.data).indexOf('children')+1) != 0){
+                        var r1 = d.data.children[0].data.Team;
+                        var r2 = d.data.children[0].data.Opponent;
+                    }
                     return ((d.data.data.Team == rows.key && d.data.data.Opponent == rows.value.Opponent) || 
-                    (d.data.data.Team == rows.value.Opponent && d.data.data.Opponent == rows.key))
+                    (d.data.data.Team == rows.value.Opponent && d.data.data.Opponent == rows.key) ||
+                    (r1 == rows.key && r2 == rows.value.Opponent) ||
+                    (r2 == rows.key && r1 == rows.value.Opponent))
                 }
             })
         label

@@ -203,7 +203,9 @@ class Table {
             .attr('class', 'row')
             .on('click', function(d, i){
                 //console.log(i)
-                self.updateList(d, i);
+                if (d.value.type == 'aggregate'){
+                    self.updateList(d, i);
+                }
             })
             .on('mouseover', function(d){
                 console.log(d)
