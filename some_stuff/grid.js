@@ -31,7 +31,7 @@ function create_rect_field(){
     var place = d3.select('#space').append('g').selectAll('rect').data(data)
         .enter()
         .append('rect')
-            .attr('fill', 'rgb(31, 30, 34)')
+            .attr('fill', col_1)
             .attr('id', function(d){
                 return  'r' + fo(d[0]) + 'x' + fo(d[1]);
             })
@@ -45,8 +45,8 @@ function create_rect_field(){
                 return d[3]+100;
             })
             .attr('border', 1)
-                .style('stroke', 'white')
-                .style('stroke-width', rect_size/100)
+                .style('stroke', col_2)
+                .style('stroke-width', 0.1)
             .on('mouseover', handlover)
             .on('mouseout', handlout);
     perspective()

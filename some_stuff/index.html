@@ -7,22 +7,35 @@
     <script  src="grid.js"></script>
     <script  src="draw.js"></script>
     <script  src="maps.js"></script>
+    <script  src="back.js"></script>
     <script  src="bresenham-js-master/bresenham-js.js"></script>
     <script src="numeric-solve.js"></script>
     <link rel="stylesheet" href="css.css"/>
 </head>
 
-<body class = 'body'>
+<body class = 'body' onload = 'start()'>
+            <div id="chart" style="text-align:center;">
+            <svg id = 'back'>
+            <div></div>
+            <input type="button" value="Click" onclick = 'show()'>
+        </div>
+        
+
+<div id = 'all' style="display:none;">
+    
+    
     <div><input type="button" value="Click it first" onclick = 'create_rect_field()'></div>
     <div><input type="button" value="Click it" onclick = 'data_prepare()'></div>
-    <div><input type="button" value="Click it" onclick = 'kaef()'></div>
+    <div><input type="button" value="Click it" onclick = 'back()'></div>
     <div>
         <p style = 'display:inline-block'>Data to show</p>
+        <input type="radio" name="Data" value="rus" onclick = 'draw("grim")'> Russia
         <input type="radio" name="Data" value="usa" onclick = 'draw("usa")' checked> USA
         <input type="radio" name="Data" value="rus" onclick = 'draw("russia")'> Russia
         <input type="radio" name="Data" value="jpn" onclick = 'draw("japan")'> Japan<br>
     </div>
         <svg id = 'space' width = '1000' height = '700'>
         </svg>
+</div>
 </body>
 </html>
