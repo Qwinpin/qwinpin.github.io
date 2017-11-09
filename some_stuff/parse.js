@@ -8,7 +8,7 @@ window.sex_aggregate = false;
 window.selected_country = 'Japan'
 
 function p(){
-    d3.csv("C://github//qwinpin.github.io//some_stuff//data//death_book.csv", function(load) {
+    d3.csv("//data//death_book.csv", function(load) {
         data = load;
     });
     
