@@ -8,6 +8,11 @@ qwinpin@gmail.com
 
 [HW2](qwinpin.github.io/hw2/table.html)
 
+[HW3](qwinpin.github.io/hw3-project/hw3.html)
+
+[HW3](qwinpin.github.io/hw3-project-2/hw3-part2.html)
+
+
 1.1
 HTML contains static information about the existing document structure
 The DOM displays also the data that is generated in the objects of the structure
