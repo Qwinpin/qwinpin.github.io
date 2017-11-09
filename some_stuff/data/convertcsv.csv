@@ -1,0 +1,9 @@
+﻿Bottom,FIELD2,Default,Normal,FIELD5,FIELD6,FIELD7,FIELD8,FIELD9,FIELD10,FIELD11,FIELD12,FIELD13,FIELD14,FIELD15,FIELD16,FIELD17,FIELD18,FIELD19,FIELD20,FIELD21,FIELD22,FIELD23,FIELD24,FIELD25,FIELD26,FIELD27,FIELD28,FIELD29,FIELD30
+,,db_header,,#0000ff,1,Swiss,,,,,,,,,,,,,,,,,,,,,,,
+,,db_datetime,,,,,mm/dd/yy\ hh:mm:ss,,,,,,,,,,,,,,,,,,,,,,
+,,db_date,,,,,mm/dd/yy,,,,,,,,,,,,,,,,,,,,,,
+,,db_time,,,,,hh:mm:ss,,,,,,,,,,,,,,,,,,,,,,
+Center,,legendBold,,Automatic,,,,Center,1,16,,,,,,,,,,,,,,,,,,,
+Center,,styleHeader,,Automatic,,,,Center,1,10,Top,Continuous,Automatic,1,Bottom,Continuous,Automatic,1,Left,Continuous,Automatic,1,Right,Continuous,Automatic,1,#D3D3D3,Solid,
+Center,,bodyLeft,,Automatic,,,,Left,1,8,Top,Continuous,Automatic,1,Bottom,Continuous,Automatic,1,Left,Continuous,Automatic,1,Right,Continuous,Automatic,1,,,Tahoma
+Center,,bodyRight,,Automatic,,,,Right,1,8,Top,Continuous,Automatic,1,Bottom,Continuous,Automatic,1,Left,Continuous,Automatic,1,Right,Continuous,Automatic,1,,,Tahoma

@@ -138,7 +138,13 @@ chart = function(){
 
     xScale.domain([min, max]);
     yScale.domain(filt_data.map(function(d) { return d.name; }));
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .tickSize(0,0);
 
+    svg.append("g")
+        .call(yAxis);
     var bar = svg.selectAll('g')
             .data(filt_data)
         .enter().append('g')

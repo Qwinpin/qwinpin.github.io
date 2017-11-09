@@ -51,6 +51,7 @@ function create_rect_field(){
             .on('mouseout', handlout);
     perspective()
     classing()
+    draw('japan')
 }
 
 function classing(){
@@ -75,7 +76,7 @@ function perspective(){
     var width = svg.attr('width');
     var height = svg.attr('height');
     var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
-        targetPoints = [[300, 0], [(width-100), 0], [width, height-200], [0, height-200]];
+        targetPoints = [[150, 0], [(width-50), 0], [width, height-100], [0, height-100]];
     var fast = transformed(sourcePoints, targetPoints);
     console.log(fast);
     svg.style('transform-origin', "15% 0%");

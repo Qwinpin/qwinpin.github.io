@@ -8,15 +8,27 @@ function show(){
 }
 
 function start(){
-    var chartDiv = document.getElementById("chart");
-    var width = chartDiv.clientWidth;
-    var height = chartDiv.clientHeight;
-    console.log(width, height)
-    var svg = d3.select('#back')
-        .attr('y', height/2)
-        .attr("width", 75)
-        .attr("height", 75);
-    back()
+    var chartDiv = document.getElementById("starter");
+    window.width_page = chartDiv.clientWidth;
+    window.height_page = chartDiv.clientHeight;
+    console.log(width_page, height_page)
+    d3.select('#starter')
+        .classed('back', true)
+        
+
+    d3.select('.header').classed('back', true)
+
+    d3.select('#logo')
+        .attr('height', '80px')
+        .attr("transform", 'translate(' + 0 + "," + 0 + ')')
+
+    d3.select('.header')
+        .attr('width', width_page)
+    //var svg = d3.select('#back')
+    //    .attr('y', height/2)
+    //    .attr("width", 75)
+    //    .attr("height", 75);
+    //back()
 }
 
 

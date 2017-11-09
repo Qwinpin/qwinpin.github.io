@@ -140,11 +140,11 @@ class Table {
                             return d3.descending(a.value.TotalGames, b.value.TotalGames)
                         }
                     }
-                    if (dn == 'Goals'){
+                    if (dn == ' Goals '){
                         if (sortAscending){
-                            return d3.ascending(Math.abs(a.value['Delta Goals']), Math.abs(b.value['Delta Goals']))
+                            return d3.ascending((a.value['Delta Goals']), (b.value['Delta Goals']))
                         } else {
-                            return d3.descending(Math.abs(a.value['Delta Goals']), Math.abs(b.value['Delta Goals']))
+                            return d3.descending((a.value['Delta Goals']), (b.value['Delta Goals']))
                         }
                     }
                     if (dn == 'Round/Result'){

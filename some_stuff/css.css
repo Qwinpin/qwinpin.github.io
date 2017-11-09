@@ -1,11 +1,41 @@
 .body{
-    background-color: #22252c;
+    background-color: white;
 }
 
-#chart {
-    position: fixed;
+#starter {
+    background-color: #22252c;
     left: 0px;
     right: 0px;
-    top: 0px;
-    bottom: 0px;
-  }
+    top: 110px;
+    padding: 10px;
+    width: 90%;
+}
+
+.back{
+    background-color: #22252c;
+    margin: auto;
+    background-attachment: fixed;
+}
+
+.header{
+    width: 90%;
+
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    height: 80px;
+    border-bottom: 10px solid #E7E6DF;
+    padding: 10px;
+}
+
+.axis{
+    fill: white;
+}
+
+#space{
+    top: 110px;
+    margin: auto;
+}
