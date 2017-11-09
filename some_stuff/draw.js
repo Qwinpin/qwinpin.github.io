@@ -268,6 +268,7 @@ function draw(country){
             .attr("transform", "translate(0,0)");
         current_country_name = '';
     }
+    console.log('1')
 }
 
 window.current_country_name = '';

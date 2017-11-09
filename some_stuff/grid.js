@@ -6,11 +6,11 @@ d3.selection.prototype.moveToFront = function() {
 };
 
 function space(del){
-    var svg = d3.select('svg');
+    var svg = d3.select('#space');
     var width = svg.attr('width');
     var height = svg.attr('height');
     svg.attr('x', 0)
-    window.rect_size = 800/del;
+    window.rect_size = width/del;
 
     var rect_data = [];
     var x = 0;
@@ -51,7 +51,6 @@ function create_rect_field(){
             .on('mouseout', handlout);
     perspective()
     classing()
-    draw('japan')
 }
 
 function classing(){

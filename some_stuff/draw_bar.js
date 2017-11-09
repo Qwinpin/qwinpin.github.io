@@ -52,5 +52,7 @@ function create_bar(data){
         .attr('class', 'axis')
         .attr('transform', 'translate(' + 150 + ',' + 5 + ')')
         .call(yAxis)
+
+    d3.selectAll('text').classed('axis', true);
             
 }
