@@ -10,7 +10,7 @@ function space(del){
     var width = svg.attr('width');
     var height = svg.attr('height');
     svg.attr('x', 0)
-    window.rect_size = width/del;
+    window.rect_size = fo(width/del);
 
     var rect_data = [];
     var x = 0;

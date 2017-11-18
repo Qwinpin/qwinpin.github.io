@@ -10,9 +10,9 @@ for y in range(image.size[0]):
     rows = []
     for x in range(image.size[1]):
         if image_array[x][y] == False:
-            rows.append(('#r' + str(y) + 'x' + str(x)))
+            rows.append("'" + str(x) + "," + str(y) + "'")
     js_array.extend(rows)
-f = open(('grim' + '.txt'), 'wb')
+f = open(('grim2' + '.txt'), 'wb')
 for item in js_array:
-	f.write("'" + item + "',")
+	f.write(item + ",")
 f.close()

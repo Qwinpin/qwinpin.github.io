@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Homework 4 (part 1)</title>
+<script src="http://d3js.org/d3.v4.min.js"></script>
+<script src="js.js"></script>
+<body onload = 'data_load()'>
+    <div>
+        <input type="radio" name="layout" value="l" onclick="field()"> Show
+    </div>
+    <div>
+        <input type="radio" name="line" value="line" onclick="in_line()"> In list
+    </div>
+    <div>
+        <select>
+            <option value="gdp" onclick="change_crit('gdp')">GDP</option>
+            <option value="population" selected onclick="change_crit('population')">Population</option> 
+        </select>
+        <input type="radio" name="line" value="line" onclick="ranked()"> Rank
+        <input type="radio" name="line" value="line" onclick="ranked_dist()"> Rank distantion
+        <input type="radio" name="line" value="line" onclick="scatter_rank()"> Scatter rank
+        <input type="radio" name="line" value="line" onclick="scatter_map()"> Scatter rank
+        <input type="radio" name="line" value="line" onclick="circular_layout()"> Circle
+        <input type="radio" name="line" value="line" onclick="group()"> Group
+        <input type="radio" name="line" value="line" onclick="circular_force()"> Country
+    </div>
+    <div><svg id = 'svg' width="960" height="600"></svg></div>
+</body>
+</html>
