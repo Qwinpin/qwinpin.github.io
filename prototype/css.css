@@ -21,17 +21,23 @@
 
 .left{
 	float:left;
-	width:40%;
+	width:39%;
 	box-sizing:border-box;
 	padding:5px;
 	min-height:200px;
+}
+
+.middle{
+	float:left;
+	width: 2%;
+	left: 39%;
 }
 
 .right{
     position: fixed;
     left: 40%;
 	float:left;
-    width:60%;
+    width:59%;
     height: 500px;
 	box-sizing:border-box;
 	padding:10px;

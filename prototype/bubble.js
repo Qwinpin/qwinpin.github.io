@@ -1,3 +1,5 @@
+window.current_year = 2;
+
 function load(){
     var element = d3.select('#map').node();
     window.width = element.getBoundingClientRect().width;
@@ -8,28 +10,28 @@ function load(){
 
     window.simulation = d3.forceSimulation()
         .force('charge', d3.forceManyBody().strength(100))
-        .force('x', d3.forceX().strength(0.05).x(center.x))
-        .force('y', d3.forceY().strength(0.05).y(center.y))
+        .force('x', d3.forceX().strength(0.1).x(center.x))
+        .force('y', d3.forceY().strength(0.1).y(center.y))
         .force('collision', d3.forceCollide().strength(2).radius(function(d) {
             return d.radius + 2;
         }))
         .on('tick', ticked);
 
     window.graph = [
-        {'id': 'First', 'radius': 10},
-        {'id': 'Second', 'radius': 20},
-        {'id': 'Third', 'radius': 30},
-        {'id': 'Fourth', 'radius': 40},
-        {'id': 'Fifth', 'radius': 50},
-        {'id': 'Sixth', 'radius': 60},
+        {'id': '1', 'radius': 10},
+        {'id': '2', 'radius': 20},
+        {'id': '3', 'radius': 30},
+        {'id': '4', 'radius': 40},
+        {'id': '5', 'radius': 50},
+        {'id': '6', 'radius': 60},
     ];
     window.graph_old = [
-        {'id': 'First', 'radius': 10},
-        {'id': 'Second', 'radius': 20},
-        {'id': 'Third', 'radius': 30},
-        {'id': 'Fourth', 'radius': 40},
-        {'id': 'Fifth', 'radius': 50},
-        {'id': 'Sixth', 'radius': 60},
+        {'id': '1', '1': 15, '2': 10, '3': 115, '4': 20, '5': 10, '6': 25, '7': 15, '8': 10},
+        {'id': '2', '1': 45, '2': 20, '3': 5, '4': 21, '5': 75, '6': 26, '7': 25, '8': 10},
+        {'id': '3', '1': 25, '2': 30, '3': 35, '4': 13, '5': 46, '6': 37, '7': 35, '8': 10},
+        {'id': '4', '1': 55, '2': 40, '3': 25, '4': 57, '5': 16, '6': 45, '7': 45, '8': 10},
+        {'id': '5', '1': 15, '2': 50, '3': 33, '4': 12, '5': 45, '6': 58, '7': 55, '8': 10},
+        {'id': '6', '1': 95, '2': 60, '3': 45, '4': 29, '5': 15, '6': 78, '7': 65, '8': 10},
     ];
     var node = svg.append("g")
         .selectAll("circle")
@@ -51,7 +53,7 @@ function load(){
         .enter().append('text')
             .attr('class', 'text')
             .text(function(d){
-                return d.radius;
+                return d.id;
             })
             .attr('font-size', function(d){
                 return d.radius/2;
@@ -86,25 +88,27 @@ function load(){
 }
 
 function sizing(v){
-    graph.forEach(function(d, i) {
-        var temp = graph_old.filter(function(v){
-            return v.id == d.id;
+    if (v != current_year){
+        current_year = v;
+        graph.forEach(function(d, i) {
+            var temp = graph_old.filter(function(v){
+                return v.id == d.id;
+            })
+            d.radius = temp[0][v];
         })
-        console.log(temp)
-        d.radius = temp[0].radius+v/10;
-    })
-    simulation.alpha(0.1).force('collision', d3.forceCollide().radius(function(d) {
-        return d.radius + 2;
-    })).restart();
-    ticked(500);
+        simulation.alpha(0.1).force('collision', d3.forceCollide().radius(function(d) {
+            return d.radius + 2;
+        })).restart();
+        ticked();
+    }
 }
 
-function ticked(dur = 0) {
-    var node = d3.selectAll('circle')
+function ticked() {
+    var node = d3.select('#map').selectAll('circle')
         .data(graph)
-    var text = d3.selectAll('text')
+    var text = d3.select('#map').selectAll('text')
         .data(graph)
-    node.transition().duration(dur)
+    node.transition().duration(50)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 
         })
@@ -112,13 +116,16 @@ function ticked(dur = 0) {
             return d.radius;
         })
 
-    text.transition().duration(dur)
-        .text(function(d){
-            return d.radius;
-        })
+    text.transition().duration(50)
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('font-size', function(d){
-            return d.radius/2;
+            return d.radius/3;
         })
+        /*.attr('dx', function(d){
+            return -d.radius/2;
+        })
+        .attr('dy', function(d){
+            return d.radius/4;
+        })*/
 }
