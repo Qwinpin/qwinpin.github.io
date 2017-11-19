@@ -1,9 +1,9 @@
-var graph = [];
+var graph = {};
 window.crit = 'population';
 window.layout = 'nope'
 window.agg = true;
-window.cirk= true;
-
+window.cirk = true;
+window.cirk2 = true;
 function change_crit(val){
     crit = val;
     console.log(crit, layout)
@@ -20,6 +20,10 @@ function change_crit(val){
             circular_layout();
             break;
         }
+        case 'circle_cirk':{
+            circular_circ();
+            break;
+        }
         default:{
             break;
         }
@@ -27,24 +31,36 @@ function change_crit(val){
 }
 
 function data_load(){
-    d3.json("https://raw.githubusercontent.com/avt00/dvcourse/master/countries_2012.json", dat)
+    d3.json("./countries_2007.json", dat)
 }
 
 function dat(data){
     console.log(data)
     var dass = [];
+    var dass2 = [];
     for (i in data){
+        var obj = {};
         var obj2 = {};
         obj2.id = data[i]['name'];
         obj2.group = data[i]['continent'];
-        obj2.gdp = data[i]['gdp']
-        obj2.population = data[i]['population']
+        obj2.gdp = data[i]['years'][12]['gdp']
+        obj2.population = data[i]['years'][12]['population']
         obj2.longitude = data[i]['longitude']
         obj2.latitude = data[i]['latitude']
-        dass.push(obj2);
+        dass2.push(obj2);
+        for (j in data[i]['years'][12]['top_partners']){
+            var obj = {};
+            obj.source = data[i]['name'];
+            //obj.target = data[i]['years'][12]['top_partners'][j]['country_id']
+            obj.target = data[j]['name']
+            obj.value = 1;
+            dass.push(obj)
+        }
     }
-    graph.nodes = dass;
-    console.log(graph.nodes)
+    graph.links = dass;
+    graph.nodes = dass2;
+    console.log(graph.links)
+    console.log(graph)
 }
 
 function field(){
@@ -64,35 +80,68 @@ function field(){
         .force("charge", d3.forceManyBody().strength(-200))
         .force('x', d3.forceX().strength(0.5).x(center.x))
         .force('y', d3.forceY().strength(0.5).y(center.y))
-
+    var link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+            .data(graph.links)
+            .enter().append("line")
+                .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
     var node = svg.append("g")
-        .attr("class", "nodes")
         .selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
+            .attr("class", "nodes")
             .attr("r", 5)
             .attr("fill", 'grey')
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
-                .on("end", dragended));
+                .on("end", dragended))
+                .on("mouseover", mouseovered)
+                .on("mouseout", mouseouted);
 
     var text = svg.append('g')
-        .attr('class', 'text')
         .selectAll('text')
         .data(graph.nodes)
         .enter().append('text')
+            .attr('class', 'text')
             .text(function(d){
                 return d.id;
             })
             .attr('font-size', 15)
             .attr('dx', 15)
             .attr('dy', 4)
+            .on("mouseover", mouseovered)
+            .on("mouseout", mouseouted);
 
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked);
-
+    simulation.force("link").strength(0)
+        .links(graph.links);
+    function mouseovered(d) {
+        node
+            .each(function(n) { n.target = n.source = false; });
+        link
+            .classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+            .classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+            .filter(function(l) { return l.target === d || l.source === d; })
+            .raise();
+        
+        node
+            .classed("node--target", function(n) { return n.target; })
+            .classed("node--source", function(n) { return n.source; });
+        }
+        
+    function mouseouted(d) {
+        link
+            .classed("link--target", false)
+            .classed("link--source", false);
+        
+        node
+            .classed("node--target", false)
+            .classed("node--source", false);
+    }
     function dragged(d) {
         d.fx = d3.event.x;
         d.fy = d3.event.y;
@@ -113,6 +162,7 @@ function field(){
 }
 
 function in_line(){
+    console.log(graph.links)
     simulation.stop()
     var max = 0;
     graph.nodes.forEach(function(d, i) {
@@ -364,9 +414,83 @@ function circular_force() {
     }
 }
 
+function circular_circ() {
+    d3.select('#svg').attr('height', 600)
+    layout = 'circle_cirk';
+    //simulation.stop();
+    var r = Math.min(height, width)/1.2;
+    
+    var arc = d3.arc()
+        .outerRadius(r);
+    
+    var pie = d3.pie()
+        .value(function(d, i) { 
+            return 1;  // We want an equal pie share/slice for each point
+        });
+    var wop = [
+        {x: 0, y: 0, id: 'Asia'},
+        {x: 0, y: 0, id: 'Africa'},
+        {x: 0, y: 0, id: 'Americas'},
+        {x: 0, y: 0, id: 'Europe'},
+        {x: 0, y: 0, id: 'Oceania'},
+    ]
+    
+    wop = pie(wop).map(function(d, i) {
+        // Needed to caclulate the centroid
+        d.innerRadius = 0;
+        d.outerRadius = r;
+        
+            // Building the data object we are going to return
+        d.x = arc.centroid(d)[0]+width/2;
+        d.y = arc.centroid(d)[1]+height/2;
+        
+        return d;
+    })
+
+    simulation.stop();
+
+    var r2 = 150;
+    
+    var arc2 = d3.arc()
+        .outerRadius(r2);
+    var max = 0;
+    for (i in wop){
+        var pie2 = d3.pie()
+            .sort(function(a, b) { return a[crit] - b[crit];})
+            .value(function(d, i) { 
+                return 1;  // We want an equal pie share/slice for each point
+            });
+        var cx = wop[i].x;
+        var cy = wop[i].y;
+        var temp_name = wop[i].data.id;
+        graph.nodes = pie2(graph.nodes).map(function(d, i) {
+            // Needed to caclulate the centroid
+            d.innerRadius = 0;
+            d.outerRadius = r2;
+            if (d.data.group == temp_name){
+                if (d.data.y > max){
+                    max = d.data.y;
+                }
+                // Building the data object we are going to return
+                d.data.x = arc2.centroid(d)[0]+cx;
+                d.data.y = arc2.centroid(d)[1]+cy;
+            }
+            return d.data;
+        })
+    }
+    d3.select('#svg').attr('height', max + 100)
+    ticked(500);
+}
+
 function ticked(dur = 0) {
     var node = d3.selectAll('circle');
     var text = d3.selectAll('text');
+    var link = d3.selectAll('line');
+    link.transition().duration(dur)
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
     node.transition().duration(dur)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 

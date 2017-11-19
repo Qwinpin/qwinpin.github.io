@@ -1,0 +1,39 @@
+.parent{
+	width:100%;
+}
+
+.body{
+    background-color: #22252c;
+}
+
+#text{
+    color: #E7E6DF;
+}
+
+.top{
+    width: 40%;
+    height: 100px;
+}
+
+.nodes{
+    fill:#E7E6DF;
+}
+
+.left{
+	float:left;
+	width:40%;
+	box-sizing:border-box;
+	padding:5px;
+	min-height:200px;
+}
+
+.right{
+    position: fixed;
+    left: 40%;
+	float:left;
+    width:60%;
+    height: 500px;
+	box-sizing:border-box;
+	padding:10px;
+	min-height:200px;
+}

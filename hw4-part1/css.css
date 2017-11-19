@@ -1,0 +1,48 @@
+.links {
+    stroke: #999;
+    stroke-opacity: 0.3;
+    opacity: 0.3;
+}
+
+.nodes {
+    opacity: 0.3;
+}
+
+.text {
+    fill: #111;
+    opacity: 0.3;
+}
+.node--source {
+    opacity: 1;
+    fill: #2ca02c;
+  }
+  
+.node--target {
+    opacity: 1;
+    fill: #111;
+}
+ 
+.text--source {
+    opacity: 1;
+    fill: #111;
+  }
+  
+.text--target {
+    opacity: 1;
+    fill: #111;
+}
+.link--source,
+.link--target {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+}
+  
+.link--source {
+    stroke-opacity: 1;
+    stroke: #111;
+}
+  
+.link--target {
+    stroke-opacity: 1;
+    stroke: #2ca02c;
+}
