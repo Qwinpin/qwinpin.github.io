@@ -5,10 +5,11 @@ function start(){
             return d3.select('.left')['_groups'][0][0]['offsetHeight'];
         })
         .attr('width', '1px')
-    set_triggers();
+    year_trigger();
+    rate_trigger()
 }
 
-function set_triggers(){
+function year_trigger(){
     var height = d3.select('#trigger_field').attr('height');
     var scale = d3.scaleQuantize()
         .domain([0, height-500])
@@ -19,9 +20,19 @@ function set_triggers(){
         offset: 0,    // start this scene after scrolling for 50px
     })
         .on('update', function(e){
-            console.log(scale(e.scrollPos))
             sizing(scale(e.scrollPos))
-            console.log(controller.info('scrollDirection'))
+        })
+        .addTo(controller); // assign the scene to the controller
+}
+
+function rate_trigger(){
+    var controller = new ScrollMagic.Controller();
+    var scene = new ScrollMagic.Scene({
+        duration: 0,    // the scene should last for a scroll distance of 100px
+        triggerElement: '#test',    // start this scene after scrolling for 50px
+    })
+        .on('start', function(e){
+            set_counter();
         })
         .addTo(controller); // assign the scene to the controller
 }

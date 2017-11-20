@@ -6,11 +6,18 @@
     background-color: #22252c;
 }
 
+#test{
+	color: #E7E6DF;
+	font-size: 35px;
+}
+
 #text{
     color: #E7E6DF;
 }
 
 .top{
+	position: fixed;
+	top: 0;
     width: 40%;
     height: 100px;
 }
@@ -20,6 +27,8 @@
 }
 
 .left{
+	margin-left: 15px;
+	margin-top: 100px;
 	float:left;
 	width:39%;
 	box-sizing:border-box;

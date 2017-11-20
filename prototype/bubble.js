@@ -1,5 +1,5 @@
 window.current_year = 2;
-
+window.dur = 0;
 function load(){
     var element = d3.select('#map').node();
     window.width = element.getBoundingClientRect().width;
@@ -96,7 +96,7 @@ function sizing(v){
             })
             d.radius = temp[0][v];
         })
-        simulation.alpha(0.1).force('collision', d3.forceCollide().radius(function(d) {
+        simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
             return d.radius + 2;
         })).restart();
         ticked();
@@ -108,7 +108,8 @@ function ticked() {
         .data(graph)
     var text = d3.select('#map').selectAll('text')
         .data(graph)
-    node.transition().duration(50)
+        
+    node.transition().duration(dur)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 
         })
@@ -116,16 +117,14 @@ function ticked() {
             return d.radius;
         })
 
-    text.transition().duration(50)
+    text.transition().duration(dur)
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('font-size', function(d){
             return d.radius/3;
         })
-        /*.attr('dx', function(d){
-            return -d.radius/2;
-        })
-        .attr('dy', function(d){
-            return d.radius/4;
-        })*/
+}
+
+function duration_set(v){
+    dur = v;
 }

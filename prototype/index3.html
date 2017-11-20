@@ -8,22 +8,24 @@
     <script  src="js.js"></script>
     <script  src="bubble.js"></script>
     <script  src="magic.js"></script>
+    <script  src="counter.js"></script>
     <link rel="stylesheet" href="css.css"/>
 </head>
 
-<body class = 'body' onload = 'load(), start()'>
+<body class = 'body' onload = 'load(), start(), death_rate()'>
 <div class = 'top'>
-    <svg></svg>
+    <svg width = '100%'>
+        <image id = 'logo' xlink:href="logo.svg" x="0" y="0" width = '100%'>
+    </svg>
 </div>              
 <div class = 'left'>
     <div id = 'text'></div>
-    <svg id = 'test' width = '100%' height = '150'>
-    </svg>
+    <div id = 'test'>0</div>
     <div id = 'text2'></div>
 </div>
 <div class = 'middle'></div>
 <div class = 'right'>
-        <input type="range" min="-100" max="100" value="0" class="slider" id="myRange" oninput="sizing(value)">
+        <input type="range" min="0" max="200" value="0" class="slider" id="myRange" oninput="duration_set(value)">
     <svg id = 'map' width = '100%' height = '100%'></svg>
 </div>
 <script type="text/javascript">
