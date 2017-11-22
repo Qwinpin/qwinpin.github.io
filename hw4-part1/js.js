@@ -31,7 +31,7 @@ function change_crit(val){
 }
 
 function data_load(){
-    d3.json("./countries_2007.json", dat)
+    d3.json("./countries_1995_2012.json", dat)
 }
 
 function dat(data){
@@ -41,7 +41,8 @@ function dat(data){
     for (i in data){
         var obj = {};
         var obj2 = {};
-        obj2.id = data[i]['name'];
+        obj2.id = data[i]['country_id'];
+        obj2.name = data[i]['name'];
         obj2.group = data[i]['continent'];
         obj2.gdp = data[i]['years'][12]['gdp']
         obj2.population = data[i]['years'][12]['population']
@@ -50,9 +51,9 @@ function dat(data){
         dass2.push(obj2);
         for (j in data[i]['years'][12]['top_partners']){
             var obj = {};
-            obj.source = data[i]['name'];
+            obj.source = data[i]['country_id'];
             //obj.target = data[i]['years'][12]['top_partners'][j]['country_id']
-            obj.target = data[j]['name']
+            obj.target = data[j]['country_id']
             obj.value = 1;
             dass.push(obj)
         }
@@ -106,7 +107,7 @@ function field(){
         .enter().append('text')
             .attr('class', 'text')
             .text(function(d){
-                return d.id;
+                return d.name;
             })
             .attr('font-size', 15)
             .attr('dx', 15)

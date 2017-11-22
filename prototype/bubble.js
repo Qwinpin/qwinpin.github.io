@@ -41,7 +41,7 @@ function load(){
             .attr("r", function(d){
                 return d.radius;
             })
-            .attr("fill", 'grey')
+            .attr("fill", '#FF5D5D')
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
