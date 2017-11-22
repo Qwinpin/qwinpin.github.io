@@ -62,6 +62,7 @@ function dat(data){
     graph.nodes = dass2;
     console.log(graph.links)
     console.log(graph)
+    field()
 }
 
 function field(){
