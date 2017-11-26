@@ -14,7 +14,16 @@ class ShiftChart {
      * @param selectedStates data corresponding to the states selected on brush
      */
     update(selectedStates){
-     
+        console.log(selectedStates)
+        var lst = d3.select('#stateList')
+        lst.select('ul').remove()
+        lst.selectAll('li').remove()
+        lst.append('ul')
+
+        lst.selectAll('li').data(selectedStates)
+            .enter()
+            .append('li')
+            .html(String);
      // ******* TODO: PART V *******
     //Display the names of selected states in a list
 

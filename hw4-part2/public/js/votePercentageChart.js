@@ -59,30 +59,208 @@ class VotePercentageChart {
 	 * @param electionResult election data for the year selected
 	 */
 	update (electionResult){
+		var my_this = this;
+		var width = this.svg.attr('width')
+		var height = this.svg.attr('height')
 
+		var indep_p = Number(electionResult[0].I_PopularPercentage.slice(0,-1));
+		var dep_p = Number(electionResult[0].D_PopularPercentage.slice(0,-1));
+		var res_p = Number(electionResult[0].R_PopularPercentage.slice(0,-1));
+
+		var indep = electionResult.filter(function(d){
+			return d['State_Winner'] == 'I'
+		})
+		var dem = electionResult.filter(function(d){
+			return d['State_Winner'] == 'D'
+		})
+		var res = electionResult.filter(function(d){
+			return d['State_Winner'] == 'R'
+		})
+		var total = d3.nest()
+			.key(function(d){ return d.State_Winner})
+			.rollup(function(v){ return d3.sum(v, function(d){ return d.Total_EV})})
+			.entries(electionResult)
+		var all_data = indep.concat(dem, res)
+		
 	        //for reference:https://github.com/Caged/d3-tip
-	        //Use this tool tip element to handle any hover over the chart
-	        let tip = d3.tip().attr('class', 'd3-tip')
-	            .direction('s')
-	            .offset(function() {
-	                return [0,0];
-	            })
-	            .html((d)=> {
-	                /* populate data in the following format
-	                 * tooltip_data = {
-	                 * "result":[
-	                 * {"nominee": D_Nominee_prop,"votecount": D_Votes_Total,"percentage": D_PopularPercentage,"party":"D"} ,
-	                 * {"nominee": R_Nominee_prop,"votecount": R_Votes_Total,"percentage": R_PopularPercentage,"party":"R"} ,
-	                 * {"nominee": I_Nominee_prop,"votecount": I_Votes_Total,"percentage": I_PopularPercentage,"party":"I"}
-	                 * ]
-	                 * }
-	                 * pass this as an argument to the tooltip_render function then,
-	                 * return the HTML content returned from that method.
-	                 * */
-	                return;
-	            });
+			//Use this tool tip element to handle any hover over the chart
+		let tip = d3.tip().attr('class', 'd3-tip').html(function(d) { 
+			var daaa = {
+				'result':[
+					{'nominee': d[0].I_Nominee_prop, 'votecount': d[0].I_Votes, 'percentage': d[0].I_Percentage, 'perty': 'I'},
+					{'nominee': d[0].D_Nominee_prop, 'votecount': d[0].D_Votes, 'percentage': d[0].D_Percentage, 'perty': 'D'},
+					{'nominee': d[0].R_Nominee_prop, 'votecount': d[0].R_Votes, 'percentage': d[0].R_Percentage, 'perty': 'R'}
+				]
+			}
+			return my_this.tooltip_render(daaa);
+		});
+		this.svg.call(tip)
+		var sum = indep_p + dep_p + res_p;
+		var x = d3.scaleLinear()
+			.domain([0, sum])
+			.range([0, width-100]);
+		var shift = 0;
+		this.svg.selectAll('rect')
+			.data([indep, dem, res])
+			.attr('x', function(d){
+				var s = shift;
+				if (d.length == 0){
+					return s;
+				}
+				if (d[0].State_Winner == 'I'){
+					var p = Number(d[0].I_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+				if (d[0].State_Winner == 'R'){
+					var p = Number(d[0].R_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+				if (d[0].State_Winner == 'D'){
+					var p = Number(d[0].D_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+			})
+			.attr('y', height/2)
+			.attr('width', function(d){
+				if (d.length == 0){
+					return 0;
+				}
+				if (d[0].State_Winner == 'I'){
+					var p = Number(d[0].I_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+				if (d[0].State_Winner == 'R'){
+					var p = Number(d[0].R_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+				if (d[0].State_Winner == 'D'){
+					var p = Number(d[0].D_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+			})
+			.attr('height', height/5)
+			.attr('class', 'electoralVotes')
+			.attr('class', function(d){
+				if (d.length == 0){
+					return my_this.chooseClass('I')
+				}
+				return my_this.chooseClass(d[0].State_Winner)
+			})
+			.on('mouseover', tip.show)
+			.on('mouseout', tip.hide)
 
+		this.svg.selectAll('rect')
+			.data([indep, dem, res]).enter().append('rect')
+			.attr('x', function(d){
+				var s = shift;
+				if (d.length == 0){
+					return s;
+				}
+				if (d[0].State_Winner == 'I'){
+					var p = Number(d[0].I_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+				if (d[0].State_Winner == 'R'){
+					var p = Number(d[0].R_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+				if (d[0].State_Winner == 'D'){
+					var p = Number(d[0].D_PopularPercentage.slice(0,-1))
+					shift += x(p)
+					return s;
+				}
+			})
+			.attr('y', height/2)
+			.attr('width', function(d){
+				if (d.length == 0){
+					return 0;
+				}
+				if (d[0].State_Winner == 'I'){
+					var p = Number(d[0].I_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+				if (d[0].State_Winner == 'R'){
+					var p = Number(d[0].R_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+				if (d[0].State_Winner == 'D'){
+					var p = Number(d[0].D_PopularPercentage.slice(0,-1))
+					return x(p);
+				}
+			})
+			.attr('height', height/5)
+			.attr('class', 'electoralVotes')
+			.attr('class', function(d){
+				if (d.length == 0){
+					return my_this.chooseClass('I')
+				}
+				return my_this.chooseClass(d[0].State_Winner)
+			})
+			.on('mouseover', tip.show)
+			.on('mouseout', tip.hide)
 
+		this.svg.select('line').remove()
+		this.svg.append('line')
+			.attr('x1', x(sum/2))
+			.attr('y1', height/2 - 5)
+			.attr('x2', x(sum/2))
+			.attr('y2', height/2 + height/5 + 5)
+			.attr("stroke-width", 5)
+			.attr("stroke", "#444444");
+		this.svg.selectAll('.electoralVoteText').remove()
+		this.svg.append('g')
+			.append('text')
+			.text(function(d){
+				return 'Popular Vote (50%)'
+			})
+			.style('font-size', '36px')
+			.style('text-anchor', 'middle')
+			.classed('electoralVoteText', true)
+			.attr('x', x(sum/2))
+			.attr('y', height/3)
+		this.svg
+			.selectAll('text').data(['I', 'D', 'R'])
+			.enter().append('text')
+			.text(function(d){
+				if (d == 'I'){
+					return res[0].I_PopularPercentage;
+				}
+				if (d == 'D'){
+					return res[0].D_PopularPercentage;
+				}
+				if (d == 'R'){
+					return res[0].R_PopularPercentage;
+				}
+			})
+			.style('font-size', '36px')
+			.style('text-anchor', function(d, i){
+				if (i == 2){
+					return 'end'
+				} else{
+					return 'start'
+				}
+			})
+			.attr('class', function(d){
+				return my_this.chooseClass(d)
+			})
+			.classed('electoralVoteText', true)
+			.attr('x', function(d){
+				if (d == 'I'){
+					return 0;
+				}
+				if (d == 'D'){
+					return Number(res[0].I_PopularPercentage.slice(0,-1))*width/100+100;
+				}
+				if (d == 'R'){
+					return width-100;
+				}
+			})
+			.attr('y', height/3)
    			  // ******* TODO: PART III *******
 
 		    //Create the stacked bar chart.
@@ -101,7 +279,7 @@ class VotePercentageChart {
 		    //HINT: Use .votesPercentageNote class to style this text element
 
 		    //Call the tool tip on hover over the bars to display stateName, count of electoral votes.
-		    //then, vote percentage and number of votes won by each party.
+		    //then, vote percentage and Number of votes won by each party.
 
 		    //HINT: Use the chooseClass method to style your elements based on party wherever necessary.
 

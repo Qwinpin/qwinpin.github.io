@@ -12,7 +12,7 @@ class TileChart {
         //Gets access to the div element created for this chart and legend element from HTML
         let svgBounds = divTiles.node().getBoundingClientRect();
         this.svgWidth = svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = this.svgWidth/2;
+        this.svgHeight = this.svgWidth/1.8;
         let legendHeight = 150;
         //add the svg to the div
         let legend = d3.select("#legend").classed("content",true);
@@ -71,7 +71,9 @@ class TileChart {
      * @param colorScale global quantile scale based on the winning margin between republicans and democrats
      */
     update (electionResult, colorScale){
-
+            var my_this = this;
+            var width = this.svg.attr('width')
+            var height = this.svg.attr('height')
             //Calculates the maximum number of columns to be laid out on the svg
             this.maxColumns = d3.max(electionResult,function(d){
                                     return parseInt(d["Space"]);
@@ -104,22 +106,95 @@ class TileChart {
                     return [0,0];
                 })
                 .html((d)=>{
-                    /* populate data in the following format
-                     * tooltip_data = {
-                     * "state": State,
-                     * "winner":d.State_Winner
-                     * "electoralVotes" : Total_EV
-                     * "result":[
-                     * {"nominee": D_Nominee_prop,"votecount": D_Votes,"percentage": D_Percentage,"party":"D"} ,
-                     * {"nominee": R_Nominee_prop,"votecount": R_Votes,"percentage": R_Percentage,"party":"R"} ,
-                     * {"nominee": I_Nominee_prop,"votecount": I_Votes,"percentage": I_Percentage,"party":"I"}
-                     * ]
-                     * }
-                     * pass this as an argument to the tooltip_render function then,
-                     * return the HTML content returned from that method.
-                     * */
-                    return ;
+                    let tooltip_data = {
+                    "state": d.State,
+                    "winner":d.State_Winner,
+                    "electoralVotes" : d.Total_EV,
+                    "result":[
+                        {"nominee": d.D_Nominee_prop,"votecount": d.D_Votes,"percentage": d.D_Percentage,"party":"D"} ,
+                        {"nominee": d.R_Nominee_prop,"votecount": d.R_Votes,"percentage": d.R_Percentage,"party":"R"} ,
+                        {"nominee": d.I_Nominee_prop,"votecount": d.I_Votes,"percentage": d.I_Percentage,"party":"I"}
+                     ]
+                     }
+                    return my_this.tooltip_render(tooltip_data);
                 });
+            var rect_width = width/this.maxColumns
+            var rect_height = height/this.maxRows
+            //this.svg.call(this.legendSvg)
+        this.svg.call(tip)
+
+        this.svg.select('g').selectAll('rect')
+            .data(electionResult)
+                .attr('x', function(d){
+                    return d.Space*rect_width;
+                })
+                .attr('y', function(d){
+                    return d.Row*rect_height;
+                })
+                .attr('width', rect_width)
+                .attr('height', rect_height)
+                .attr('class', function(d){
+                    return my_this.chooseClass(d.State_Winner)
+                })
+                .classed('tile', true)
+                .style('fill', function(d){
+                    if (d.State_Winner == 'I'){
+                        return 'green'
+                    }
+                    return colorScale(Number(d.RD_Difference))
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
+
+            this.svg.append('g').selectAll('rect')
+                .data(electionResult).enter()
+                .append('rect')
+                    .attr('x', function(d){
+                        return d.Space*rect_width;
+                    })
+                    .attr('y', function(d){
+                        return d.Row*rect_height;
+                    })
+                    .attr('width', rect_width)
+                    .attr('height', rect_height)
+                    .attr('class', function(d){
+                        return my_this.chooseClass(d.State_Winner)
+                    })
+                    .classed('tile', true)
+                    .style('fill', function(d){
+                        if (d.State_Winner == 'I'){
+                            return 'green'
+                        }
+                        return colorScale(Number(d.RD_Difference))
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+
+            d3.select('.text').remove()
+            var text = this.svg.append('g')
+                .classed('text', true)
+           
+            text.selectAll('text')
+                .data(electionResult).enter()
+                .append('text')
+                .attr('x', function(d){
+                    return d.Space*rect_width;
+                })
+                .attr('y', function(d){
+                    return d.Row*rect_height;
+                })
+                .attr('dx', function(d){
+                    return rect_width/2;
+                })
+                .attr('dy', function(d){
+                    return rect_height/2;
+                })
+                .text(function(d){
+                    var text = d.Abbreviation;
+                    text += d.Total_EV;
+                    return text;
+                })
+                .classed('tilestext', true)
 
             // ******* TODO: PART IV *******
             //Tansform the legend element to appear in the center and make a call to this element for it to display.
