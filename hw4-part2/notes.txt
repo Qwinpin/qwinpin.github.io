@@ -1,0 +1,2 @@
+To demonstrate changes in the political views of the state, you can use an animation that will show a smooth transition (color). In this case, it is possible to click on certain states to demonstrate changes for them, the rest either temporarily remove or reduce the opacity.
+If you create a two-sided barchart besides the map: deviations to the left are Democrats, right-Republicans, then you can demonstrate these changes directly in the size of bars, which can be more visible than the color code

@@ -10,9 +10,9 @@
         <input type="radio" name="line" value="line" onclick="in_line()"> In list
     </div>
     <div>
-        <select>
-            <option value="gdp" onclick="change_crit('gdp')">GDP</option>
-            <option value="population" selected onclick="change_crit('population')">Population</option> 
+        <select onchange="change_crit()">
+            <option value="gdp" >GDP</option>
+            <option value="population" selected>Population</option> 
         </select>
         <input type="radio" name="line" value="line" onclick="ranked()"> Rank
         <input type="radio" name="line" value="line" onclick="ranked_dist()"> Rank distantion

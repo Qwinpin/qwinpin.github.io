@@ -1,11 +1,19 @@
 var graph = {};
 window.crit = 'population';
+window.crit_check = true;
 window.layout = 'nope'
 window.agg = true;
 window.cirk = true;
 window.cirk2 = true;
 function change_crit(val){
-    crit = val;
+    if (crit_check){
+        crit = 'gdp';
+        crit_check = !crit_check;
+    } else{
+        crit = 'population';
+        crit_check = !crit_check;
+    }
+    
     console.log(crit, layout)
     switch (layout){
         case 'rank':{
@@ -35,7 +43,6 @@ function data_load(){
 }
 
 function dat(data){
-    console.log(data)
     var dass = [];
     var dass2 = [];
     for (i in data){
@@ -60,8 +67,7 @@ function dat(data){
     }
     graph.links = dass;
     graph.nodes = dass2;
-    console.log(graph.links)
-    console.log(graph)
+
     field()
 }
 
@@ -164,7 +170,6 @@ function field(){
 }
 
 function in_line(){
-    console.log(graph.links)
     simulation.stop()
     var max = 0;
     graph.nodes.forEach(function(d, i) {
@@ -188,7 +193,6 @@ function ranked_dist(){
     var scale = d3.scaleLinear()  
         .domain([0, max])
         .range([d3.select('#svg').attr('height'), 0]);
-    console.log(max)
     var max = 0;
     graph.nodes.forEach(function(d, i) {
         d.y = 10 + 13*scale(d[crit]);
@@ -208,7 +212,6 @@ function ranked(){
     graph.nodes.sort(function(a, b){
         return d3.descending(a[crit], b[crit])
     })
-    console.log(max)
     var max = 0;
     graph.nodes.forEach(function(d, i) {
         d.y = 10 + 13*i;
