@@ -19,7 +19,7 @@ class ShiftChart {
         lst.select('ul').remove()
         lst.selectAll('li').remove()
         lst.append('ul')
-
+        selectedStates = selectedStates.filter(function(n){ return n != undefined }); 
         lst.selectAll('li').data(selectedStates)
             .enter()
             .append('li')
