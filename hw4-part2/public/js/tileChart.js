@@ -57,7 +57,9 @@ class TileChart {
         text += "<ul>"
         tooltip_data.result.forEach((row)=>{
             //text += "<li>" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
-            text += "<li class = " + this.chooseClass(row.party)+ ">" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
+            if (row.votecount.length != 0){
+                text += "<li class = " + this.chooseClass(row.party)+ ">" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
+            }
         });
         text += "</ul>";
 

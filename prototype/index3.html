@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css.css"/>
 </head>
 
-<body class = 'body' onload = 'load(), start(), death_rate()'>
+<body class = 'body' onload = 'data_load(), death_rate()'>
 <div class = 'top'>
     <svg width = '100%'>
         <image id = 'logo' xlink:href="logo.svg" x="0" y="0" width = '100%'>
@@ -20,13 +20,15 @@
 </div>              
 <div class = 'left'>
     <div id = 'text'></div>
-    <div id = 'test'>0</div>
     <div id = 'text2'></div>
     <input type="button" onclick="window.location='.//index4.html';" value="Page2!">
 </div>
 <div class = 'middle'></div>
 <div class = 'right'>
         <input type="range" min="0" max="200" value="0" class="slider" id="myRange" oninput="duration_set(value)">
+        <div id = 'test'>0</div> <div style='display: inline-block;color: #E7E6DF; font-size: 35px;'> / </div>
+        <div id = 'test2'>0</div>
+        <div id = 'Cause'></div>
     <svg id = 'map' width = '100%' height = '100%'></svg>
 </div>
 <script type="text/javascript">

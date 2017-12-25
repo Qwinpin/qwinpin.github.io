@@ -7,6 +7,17 @@
 }
 
 #test{
+	display: inline-block;
+	color: #E7E6DF;
+	font-size: 35px;
+}
+#test2{
+	display: inline-block;
+	color: #E7E6DF;
+	font-size: 35px;
+}
+
+#Cause{
 	color: #E7E6DF;
 	font-size: 35px;
 }
@@ -23,7 +34,6 @@
 }
 
 .nodes{
-    fill:#FF4545;
 }
 
 .left{
