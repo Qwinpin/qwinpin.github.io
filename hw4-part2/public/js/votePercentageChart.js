@@ -47,7 +47,10 @@ class VotePercentageChart {
 	tooltip_render (tooltip_data) {
 	    let text = "<ul>";
 	    tooltip_data.result.forEach((row)=>{
-	        text += "<li class = " + this.chooseClass(row.party)+ ">" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
+		if (row.votecount.length != 0){
+	        
+			text += "<li class = " + this.chooseClass(row.party)+ ">" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
+		}
 	    });
 
 	    return text;
