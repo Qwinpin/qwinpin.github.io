@@ -87,7 +87,7 @@ function load(data){
     }
     
     function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        if (!d3.event.active) simulation.alphaTarget(0.1).restart();
             d.fx = d.x;
             d.fy = d.y;
     }
@@ -124,7 +124,7 @@ function sizing(v){
             d.value = temp[j].value;
         })
         console.log(df)
-        simulation.alpha(0.2).force('collision', d3.forceCollide().radius(function(d) {
+        simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
             return d.value / summ_death * 200;
         })).restart();
         ticked();

@@ -21,7 +21,7 @@ function set_counter(){
             })
         d3.select('#test2')
         .transition()
-        .duration(1000)
+        .duration(500)
             .tween("text", function() {
                 var that = d3.select(this),
                     i = d3.interpolateNumber(that.text(), Math.round(summ_death));
