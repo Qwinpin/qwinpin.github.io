@@ -12,11 +12,11 @@ function start(){
 function year_trigger(){
     var height = d3.select('#trigger_field').attr('height');
     var foo = [];
-    for (var i=1979; i<2014; i += 1){
+    for (var i=1979; i<2014; i += 3){
         foo.push(i);
     }
     var scale = d3.scaleQuantile()
-        .domain([100, height-500])
+        .domain([50, height/2-100])
         .range(foo);
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({

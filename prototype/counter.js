@@ -14,7 +14,6 @@ function set_counter(){
             .tween("text", function() {
                 var that = d3.select(this),
                     i = d3.interpolateNumber(that.text(), Math.round(rate));
-                    console.log(that.text())
                     return (function(t) {
                         that.text(format(i(t)));
                     });
@@ -25,11 +24,11 @@ function set_counter(){
             .tween("text", function() {
                 var that = d3.select(this),
                     i = d3.interpolateNumber(that.text(), Math.round(summ_death));
-                    console.log(that.text())
                     return (function(t) {
                         that.text(format(i(t)));
                     });
             })
         d3.select('#Cause').text(cause)
+        d3.select('#Year').text(current_year)
         }
 }

@@ -10,16 +10,27 @@
 	display: inline-block;
 	color: #E7E6DF;
 	font-size: 35px;
+	text-align: center;
 }
 #test2{
 	display: inline-block;
 	color: #E7E6DF;
 	font-size: 35px;
+	text-align: center;
 }
 
 #Cause{
 	color: #E7E6DF;
 	font-size: 35px;
+	display: inline-block;
+	text-align: center;
+}
+
+#Year{
+	color: #E7E6DF;
+	font-size: 35px;
+	display: inline-block;
+	text-align: center;
 }
 
 #text{
@@ -38,7 +49,7 @@
 
 .left{
 	margin-left: 15px;
-	margin-top: 100px;
+	margin-top: 200px;
 	float:left;
 	width:39%;
 	box-sizing:border-box;
@@ -57,8 +68,9 @@
     left: 40%;
 	float:left;
     width:59%;
-    height: 500px;
+    height: 1000px;
 	box-sizing:border-box;
 	padding:10px;
 	min-height:200px;
+	text-align: center;
 }

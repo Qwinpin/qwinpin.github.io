@@ -21,17 +21,16 @@ function load(data){
     for (i in df){
         summ_death += df[i].value;
     }
-    console.log(summ_death)
     var element = d3.select('#map').node();
     window.width = element.getBoundingClientRect().width;
     window.height = element.getBoundingClientRect().height;
     window.center = { x: width / 2, y: height / 2 };
     var svg = d3.select('#map')
     window.simulation = d3.forceSimulation()
-        .force('charge', d3.forceManyBody().strength(100))
+        .force('charge', d3.forceManyBody().strength(5))
         .force('x', d3.forceX().strength(0.1).x(center.x))
         .force('y', d3.forceY().strength(0.1).y(center.y))
-        .force('collision', d3.forceCollide().strength(2).radius(function(d) {
+        .force('collision', d3.forceCollide().strength(0.2).radius(function(d) {
             return d.value / summ_death * 100;
         }))
         .on('tick', ticked);
@@ -42,13 +41,13 @@ function load(data){
         .enter().append("circle")
             .attr("class", "nodes")
             .attr("r", function(d){
-                return d.value / summ_death * 200;
+                return d.value / summ_death * 600;
             })
             .attr("fill", function(d){
                 if (d.key == 'neoplazm'){
                     return '#44a2ff';
                 } else{
-                    return '#ff4444';
+                    return 'grey';
                 }
             })
             .call(d3.drag()
@@ -56,7 +55,7 @@ function load(data){
                 .on("drag", dragged)
                 .on("end", dragended))
             
-            node.on('mouseover', hovered)
+            node.on('click', hovered)
             .on('mouseout', hovered_out)
 
     /*var text = svg.append('g')
@@ -87,7 +86,7 @@ function load(data){
     }
     
     function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.1).restart();
+        if (!d3.event.active) simulation.alphaTarget(0.05).restart();
             d.fx = d.x;
             d.fy = d.y;
     }
@@ -123,9 +122,8 @@ function sizing(v){
             }
             d.value = temp[j].value;
         })
-        console.log(df)
         simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
-            return d.value / summ_death * 200;
+            return d.value / summ_death * 600;
         })).restart();
         ticked();
         for (i in df){
@@ -143,12 +141,12 @@ function ticked() {
     var text = d3.select('#map').selectAll('text')
         .data(df)
         
-    node.transition().duration(dur)
+    node.transition().duration(50)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 
         })
         .attr('r', function(d){
-            return d.value / summ_death * 200;
+            return d.value / summ_death * 600;
         })
 
     /*text.transition().duration(dur)
