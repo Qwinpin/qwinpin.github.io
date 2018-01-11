@@ -145,7 +145,7 @@ function ticked() {
     var text = d3.select('#map').selectAll('text')
         .data(df)
         
-    node.transition().duration(70)
+    node.transition().duration(50)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 
         })
