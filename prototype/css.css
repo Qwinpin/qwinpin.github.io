@@ -3,7 +3,8 @@
 }
 
 .body{
-    background-color: #22252c;
+	/*background-color: #22252c;*/
+	background-color: #f8f8f8;
 }
 
 #test{
@@ -33,8 +34,9 @@
 	text-align: center;
 }
 
-#text{
-    color: #E7E6DF;
+.text{
+	font-family: "Sans-serif", Helvetica;
+    color: rgb(33, 33, 32);
 }
 
 .top{
@@ -51,7 +53,7 @@
 	margin-left: 15px;
 	margin-top: 200px;
 	float:left;
-	width:39%;
+	width:500px;
 	box-sizing:border-box;
 	padding:5px;
 	min-height:200px;
@@ -65,7 +67,7 @@
 
 .right{
     position: fixed;
-    left: 40%;
+    left: 500px;
 	float:left;
     width:59%;
     height: 1000px;

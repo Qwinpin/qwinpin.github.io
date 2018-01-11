@@ -1,21 +1,21 @@
-window.current_year = 2;
+window.current_year = '1979';
 window.dur = 0;
 
 function data_load(){
-    d3.csv(".//data//first_story_data.csv", function(data) {
-        load(data)
-    });
+        d3.csv(".//data//first_story_data.csv", function(data) {
+            load(data)
+        });
 }
 
 function load(data){
     window.first_story = data
     window.df_old = d3.nest()
         .key(function(d) { return d.Cause })
-        .rollup(function(b) { return d3.sum(b, function(d) { return d['1979']; }); })
+        .rollup(function(b) { return d3.sum(b, function(d) { return d[current_year]; }); })
         .entries(first_story);
     window.df = d3.nest()
         .key(function(d) { return d.Cause })
-        .rollup(function(b) { return d3.sum(b, function(d) { return d['1979']; }); })
+        .rollup(function(b) { return d3.sum(b, function(d) { return d[current_year]; }); })
         .entries(first_story);
     window.summ_death = 0;
     for (i in df){
@@ -34,8 +34,10 @@ function load(data){
             return d.value / summ_death * 100;
         }))
         .on('tick', ticked);
-
-    var node = svg.append("g")
+    df.forEach(function(d, j) {
+        d.value = 0;
+    })
+    var node = svg//.append("g")
         .selectAll("circle")
         .data(df)
         .enter().append("circle")
@@ -45,7 +47,7 @@ function load(data){
             })
             .attr("fill", function(d){
                 if (d.key == 'neoplazm'){
-                    return '#44a2ff';
+                    return '#FF4040';
                 } else{
                     return 'grey';
                 }
@@ -57,7 +59,6 @@ function load(data){
             
             node.on('click', hovered)
             .on('mouseout', hovered_out)
-
     /*var text = svg.append('g')
         .selectAll('text')
         .data(df)
@@ -75,11 +76,15 @@ function load(data){
             .attr('dy', function(d){
                 return d.value / summ_death * 300;
             })*/
-
+    sizing(current_year);
+    ticked();
     simulation
         .nodes(df)
         .on("tick", ticked);
-
+    simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
+        return d.value / summ_death * 600;
+    })).restart();
+    ticked();
     function dragged(d) {
         d.fx = d3.event.x;
         d.fy = d3.event.y;
@@ -105,7 +110,6 @@ function load(data){
 
     function hovered_out(){
     }
-    start()
 }
 
 function sizing(v){
@@ -141,7 +145,7 @@ function ticked() {
     var text = d3.select('#map').selectAll('text')
         .data(df)
         
-    node.transition().duration(50)
+    node.transition().duration(70)
         .attr("transform", function(d) { 
             return "translate("+d.x+","+d.y+")"; 
         })
@@ -157,6 +161,6 @@ function ticked() {
         })*/
 }
 
-function duration_set(v){
-    dur = v;
+function close_fs(){
+
 }
