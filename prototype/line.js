@@ -47,15 +47,15 @@ function load_ss(data){
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
-        .attr("d", valueline);
+        .attr("d", valueline)
 
     // Add the X Axis
-    svg.append("g")
+    svg.append("g").transition().duration(1000)
         .attr("transform", "translate(150," + 800 + ")")
         .call(d3.axisBottom(x));
 
     // Add the Y Axis
-    svg.append("g")
+    svg.append("g").transition().duration(1000)
         .attr("transform", "translate(150,0)")
         .call(d3.axisLeft(y))
     }
