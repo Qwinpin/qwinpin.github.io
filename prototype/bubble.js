@@ -34,10 +34,8 @@ function load(data){
             return d.value / summ_death * 100;
         }))
         .on('tick', ticked);
-    df.forEach(function(d, j) {
-        d.value = 0;
-    })
-    var node = svg//.append("g")
+    sizing(1970);
+    var node = svg.append("g").attr('id', 'bubble')
         .selectAll("circle")
         .data(df)
         .enter().append("circle")
@@ -76,8 +74,7 @@ function load(data){
             .attr('dy', function(d){
                 return d.value / summ_death * 300;
             })*/
-    sizing(current_year);
-    ticked();
+    
     simulation
         .nodes(df)
         .on("tick", ticked);
@@ -115,6 +112,7 @@ function load(data){
 function sizing(v){
     if (v != current_year){
         current_year = v;
+        current_year_ss = current_year;
         df.forEach(function(d, j) {
             var temp = d3.nest()
                 .key(function(d) { return d.Cause;})
@@ -135,8 +133,8 @@ function sizing(v){
                 rate = df[i].value; 
             }
         }
-        set_counter();
     }
+    set_counter(v);
 }
 
 function ticked() {
@@ -146,8 +144,8 @@ function ticked() {
         .data(df)
         
     node.transition().duration(60)
-        .attr("transform", function(d) { 
-            return "translate("+d.x+","+d.y+")"; 
+        .attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")"; 
         })
         .attr('r', function(d){
             return d.value / summ_death * 600;
