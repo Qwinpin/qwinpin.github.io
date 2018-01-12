@@ -45,12 +45,15 @@ function year_trigger(){
         .range(foo);
     window.controller_fs = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 1,    // the scene should last for a scroll distance of 100px
+        duration: 0,    // the scene should last for a scroll distance of 100px
         offset: 100,    // start this scene after scrolling for 50px
     })
         .on('update', function(e){
-            set_counter(scale(e.scrollPos))
-            sizing(scale(e.scrollPos))
+            if (e.scrollPos <= fs_height-500){
+                sizing(scale(e.scrollPos))
+            }else{
+            }
+            
         })
         .addTo(controller_fs); // assign the scene to the controller
 }
@@ -62,15 +65,15 @@ function year_trigger_ss(){
         foo.push(i);
     }
     var scale = d3.scaleQuantile()
-        .domain([fs_height+50, fs_height + ss_height-900])
+        .domain([fs_height+150, fs_height + ss_height-900])
         .range(foo);
     window.controller_ss = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
         duration: ss_height,    // the scene should last for a scroll distance of 100px
-        offset: fs_height,    // start this scene after scrolling for 50px
+        offset: fs_height+150,    // start this scene after scrolling for 50px
     })
         .on('update', function(e){
-            update_ss(scale(e.scrollPos))
+                update_ss(scale(e.scrollPos))
         })
         .addTo(controller_ss); // assign the scene to the controller
 }
@@ -78,7 +81,7 @@ function year_trigger_ss(){
 function rate_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 1,    // the scene should last for a scroll distance of 100px
+        duration: fs_height,    // the scene should last for a scroll distance of 100px
         offset: 150,    // start this scene after scrolling for 50px
     })
         .on('start', function(e){
@@ -101,7 +104,7 @@ function rate_trigger(){
 function ss_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 50,    // the scene should last for a scroll distance of 100px
+        duration: 0,    // the scene should last for a scroll distance of 100px
         offset: fs_height-500,    // start this scene after scrolling for 50px
     })
         .on('start', function(e){
@@ -116,8 +119,9 @@ function ss_trigger(){
                 start_check_ss = true;
             }
             }else{
-                d3.select('#map').select('#bars').remove();
-                controller_ss.removeScene(scene);
+                d3.select('#map').select('#bars').remove().transition().duration(60);
+                //remove_ss();
+                //controller_ss.removeScene(scene);
                 start_check_ss = false;
             }
         })

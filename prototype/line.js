@@ -32,12 +32,14 @@ function load_ss(data){
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
     var svg = d3.select('#map').append('g').attr('id', 'bars')
+    var step = 145 + (x(['1-4']) - x(['1']))/2
+    console.log(step)
     var bars = svg.selectAll('rect')
         .data(df_ss)
         .enter().append('rect')
     bars.style('fill', 'grey').attr('class', 'bar')
-        .attr('x', function(d){ return 182 + (x(d.key));})
-        .transition().duration(500)
+        .attr('x', function(d){ return step + (x(d.key));})
+        .transition().duration(1000)
         .attr('width', 10)
         .attr('height', function(d){ return y(d.value) })
         .attr('y', function(d){ return 600 - y(d.value); })
@@ -45,12 +47,12 @@ function load_ss(data){
         
         //.on("click", barChart.chooseCup)
     // Add the X Axis
-    svg.append("g").transition().duration(1000)
+    svg.append("g").attr('class', 'axis').transition().duration(1000)
         .attr("transform", "translate(150," + 600 + ")")
         .call(d3.axisBottom(x));
 
     // Add the Y Axis
-    svg.append("g").transition().duration(1000)
+    svg.append("g").attr('class', 'axis').transition().duration(1000)
         .attr("transform", "translate(150,0)")
         .call(d3.axisLeft(y))
 }
@@ -70,7 +72,16 @@ function update_ss(year){
     })
     var svg = d3.select('#map').select('#bars')
     var bars = svg.selectAll('rect')
-        .data(df_ss).transition().duration(60)
+        .data(df_ss).transition().duration(100)
         .attr('height', function(d){ return y(d.value) })
         .attr('y', function(d){ return 600 - y(d.value); })
+}
+
+function remove_ss(){
+    var svg = d3.select('#map').select('#bars')
+    var bars = svg.selectAll('rect').remove().transition().duration(1000)
+        .attr('height', function(d){ return 0 })
+        .attr('y', function(d){ return 600; })
+
+    d3.selectAll('.axis').remove().transition().duration(1000)
 }

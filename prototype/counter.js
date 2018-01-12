@@ -5,7 +5,6 @@ function death_rate(){
 }
 
 function set_counter(year){
-    console.log(year)
     var format = d3.format("d");
     if (!counted){
         //counted = !counted;
