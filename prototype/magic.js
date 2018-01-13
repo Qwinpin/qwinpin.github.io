@@ -4,6 +4,11 @@ function start(){
     window.fs_height = d3.select('#text1')['_groups'][0][0]['offsetHeight'];
     window.ss_height = d3.select('#text3')['_groups'][0][0]['offsetHeight'];
     window.ss_width = d3.select('.right')['_groups'][0][0]['offsetWidth'];
+    window.left_width = d3.select('.left')['_groups'][0][0]['offsetWidth'];
+    window.right_height = d3.select('.right')['_groups'][0][0]['offsetHeight'];
+    window.right_width = d3.select('.right')['_groups'][0][0]['offsetWidth'];
+    d3.select('.top').style('width', (left_width + 10 + 'px'))
+
     d3.select('.middle').append('svg')
         .attr('id', 'trigger_field')
         .attr('height', function(d){
@@ -32,6 +37,7 @@ function start(){
     //year_trigger();
     rate_trigger()
     ss_trigger()
+    head()
 }
 
 function year_trigger(){
@@ -41,7 +47,7 @@ function year_trigger(){
         foo.push(i);
     }
     var scale = d3.scaleQuantile()
-        .domain([150, fs_height-500])
+        .domain([250, fs_height-300])
         .range(foo);
     window.controller_fs = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
@@ -49,8 +55,10 @@ function year_trigger(){
         offset: 100,    // start this scene after scrolling for 50px
     })
         .on('update', function(e){
-            if (e.scrollPos <= fs_height-500){
+            if (e.scrollPos <= fs_height){
                 sizing(scale(e.scrollPos))
+                d3.select('#Year').text(scale(e.scrollPos))
+                console.log(scale(e.scrollPos))
             }else{
             }
             
@@ -64,16 +72,17 @@ function year_trigger_ss(){
     for (var i=1979; i<2015; i += 1){
         foo.push(i);
     }
-    var scale = d3.scaleQuantile()
-        .domain([fs_height+150, fs_height + ss_height-900])
+    var scale_ss = d3.scaleQuantile()
+        .domain([fs_height+200, fs_height + ss_height-500])
         .range(foo);
     window.controller_ss = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
         duration: ss_height,    // the scene should last for a scroll distance of 100px
-        offset: fs_height+150,    // start this scene after scrolling for 50px
+        offset: fs_height+100,    // start this scene after scrolling for 50px
     })
         .on('update', function(e){
-                update_ss(scale(e.scrollPos))
+                update_ss(scale_ss(e.scrollPos))
+                d3.select('.ss').text(scale_ss(e.scrollPos))
         })
         .addTo(controller_ss); // assign the scene to the controller
 }
@@ -82,7 +91,7 @@ function rate_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
         duration: fs_height,    // the scene should last for a scroll distance of 100px
-        offset: 150,    // start this scene after scrolling for 50px
+        offset: 250,    // start this scene after scrolling for 50px
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -90,6 +99,7 @@ function rate_trigger(){
                     data_load();
                     year_trigger();
                     start_check_fs = true;
+                    d3.select('#Year').attr('class', 'fs')
                 }
             } else{
                 df.forEach(function(d, j) {
@@ -105,7 +115,7 @@ function ss_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
         duration: 0,    // the scene should last for a scroll distance of 100px
-        offset: fs_height-500,    // start this scene after scrolling for 50px
+        offset: fs_height,    // start this scene after scrolling for 50px
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -117,13 +127,61 @@ function ss_trigger(){
                 data_load_ss();
                 year_trigger_ss()
                 start_check_ss = true;
+                cause = ' '
+                d3.selectAll('.test').style('visibility', 'hidden')
+                d3.select('#Year').attr('class', 'ss')
             }
             }else{
                 d3.select('#map').select('#bars').remove().transition().duration(60);
                 //remove_ss();
                 //controller_ss.removeScene(scene);
                 start_check_ss = false;
+                cause = 'neoplazm';
+                d3.selectAll('.test').style('visibility', 'visible')
+                d3.select('#Year').attr('class', 'fs')
             }
         })
         .addTo(controller); // assign the scene to the controller
+}
+
+function head(){
+    var controller = new ScrollMagic.Controller();
+    var scene = new ScrollMagic.Scene({
+        triggerElement: '#head_fs',
+        triggerHook: 0.15
+    })
+        .on('start', function(e){
+            if (e.scrollDirection == 'FORWARD'){
+                d3.select('#main_head').text(d3.select('#head_fs').text())
+            } else{
+                d3.select('#main_head').text('Рак помолодел?')
+            }
+        })
+        .addTo(controller); 
+
+    var scene2 = new ScrollMagic.Scene({
+        triggerElement: '#head_ss',
+        triggerHook: 0.15
+    })
+        .on('start', function(e){
+            if (e.scrollDirection == 'FORWARD'){
+                d3.select('#main_head').text(d3.select('#head_ss').text())
+            } else{
+                d3.select('#main_head').text(d3.select('#head_fs').text())
+            }
+        })
+        .addTo(controller);
+
+    var scene2_2 = new ScrollMagic.Scene({
+        triggerElement: '#head_ss2',
+        triggerHook: 0.15
+    })
+        .on('start', function(e){
+            if (e.scrollDirection == 'FORWARD'){
+                d3.select('#main_head').text(d3.select('#head_ss2').text())
+            } else{
+                d3.select('#main_head').text(d3.select('#head_ss').text())
+            }
+        })
+        .addTo(controller);
 }

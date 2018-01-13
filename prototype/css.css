@@ -7,43 +7,46 @@
 	background-color: #f8f8f8;
 }
 
-#test{
-	display: inline-block;
-	color: #E7E6DF;
-	font-size: 35px;
-	text-align: center;
+.test{
+	color: #222222;
 }
-#test2{
-	display: inline-block;
-	color: #E7E6DF;
-	font-size: 35px;
+
+.headers{
+	font-family: "Sans-serif", Verdana;
+	font-size: 30px;
 	text-align: center;
+	display: inline-block;
 }
 
 #Cause{
-	color: #E7E6DF;
-	font-size: 35px;
+	color: #222222;
+	font-family: "Sans-serif", Verdana;
 	display: inline-block;
-	text-align: center;
+	font-size: 30px;
 }
 
 #Year{
-	color: #E7E6DF;
-	font-size: 35px;
+	color: #FF4040;
 	display: inline-block;
-	text-align: center;
+	font-size: 30px;
 }
 
 .text{
-	font-family: "Sans-serif", Helvetica;
+	font-family: "Sans-serif", Verdana;
     color: rgb(33, 33, 32);
+}
+
+#counter{
+    color: #FF4040;
 }
 
 .top{
 	position: fixed;
 	top: 0;
     width: 40%;
-    height: 100px;
+	height: 150px;
+	background-color: #f8f8f8;
+	text-align: center;
 }
 
 .nodes{
@@ -70,7 +73,7 @@
     left: 500px;
 	float:left;
     width:59%;
-    height: 1000px;
+    height: 100%;
 	box-sizing:border-box;
 	padding:10px;
 	min-height:200px;

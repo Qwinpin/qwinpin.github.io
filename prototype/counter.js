@@ -8,9 +8,9 @@ function set_counter(year){
     var format = d3.format("d");
     if (!counted){
         //counted = !counted;
-        d3.select('#test')
+        d3.select('#counter')
         .transition()
-        .duration(1000)
+        .duration(10)
             .tween("text", function() {
                 var that = d3.select(this),
                     i = d3.interpolateNumber(that.text(), Math.round(rate / summ_death * 100));
@@ -19,6 +19,5 @@ function set_counter(year){
                     });
             })
         d3.select('#Cause').text(cause)
-        d3.select('#Year').text(year)
         }
 }

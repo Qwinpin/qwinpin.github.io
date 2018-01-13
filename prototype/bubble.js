@@ -22,9 +22,9 @@ function load(data){
         summ_death += df[i].value;
     }
     var element = d3.select('#map').node();
-    window.width = element.getBoundingClientRect().width;
-    window.height = element.getBoundingClientRect().height;
-    window.center = { x: width / 2, y: height / 2 };
+    //window.width = element.getBoundingClientRect().width;
+    //window.height = element.getBoundingClientRect().height;
+    window.center = { x: right_width / 2, y: right_height / 2 };
     var svg = d3.select('#map')
     window.simulation = d3.forceSimulation()
         .force('charge', d3.forceManyBody().strength(5))
@@ -41,7 +41,7 @@ function load(data){
         .enter().append("circle")
             .attr("class", "nodes")
             .attr("r", function(d){
-                return d.value / summ_death * 600;
+                return d.value / summ_death * right_width/2;
             })
             .attr("fill", function(d){
                 if (d.key == 'neoplazm'){
@@ -79,7 +79,7 @@ function load(data){
         .nodes(df)
         .on("tick", ticked);
     simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
-        return d.value / summ_death * 600;
+        return d.value / summ_death * right_width/2;
     })).restart();
     ticked();
     function dragged(d) {
@@ -125,7 +125,7 @@ function sizing(v){
             d.value = temp[j].value;
         })
         simulation.alpha(0.5).force('collision', d3.forceCollide().radius(function(d) {
-            return d.value / summ_death * 600;
+            return d.value / summ_death * right_width/2;
         })).restart();
         ticked();
         for (i in df){
@@ -148,7 +148,7 @@ function ticked() {
             return "translate(" + d.x + "," + d.y + ")"; 
         })
         .attr('r', function(d){
-            return d.value / summ_death * 600;
+            return d.value / summ_death * right_width/2;
         })
 
     /*text.transition().duration(dur)
