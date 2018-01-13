@@ -46,12 +46,16 @@ function load_ss(data){
         
         //.on("click", barChart.chooseCup)
     // Add the X Axis
-    svg.append("g").attr('class', 'axis').transition().duration(1000)
+    svg.append("g").attr('class', 'axis')
+        .attr("transform", "translate(150," + 0 + ")")
+        .transition().duration(1000)
         .attr("transform", "translate(150," + (line_height-margin.bottom) + ")")
         .call(d3.axisBottom(x));
 
     // Add the Y Axis
-    svg.append("g").attr('class', 'axis').transition().duration(1000)
+    svg.append("g").attr('class', 'axis')
+        .attr("transform", "translate(150," + 0 + ")")
+        .transition().duration(1000)
         .attr("transform", "translate(150,0)")
         .call(d3.axisLeft(y))
 
@@ -65,7 +69,7 @@ function load_ss(data){
     d3.select('.legend').append('text')
         .attr('x', 15)
         .attr('y', 45)
-        .text('Значения по всем локализациям рака')
+        .text('Количество смертей от всех локализаций рака')
 
     d3.select('.legend').append('rect').style('fill', '#FF4040')
         .attr('width', 10)
@@ -75,7 +79,7 @@ function load_ss(data){
     d3.select('.legend').append('text')
         .attr('x', 15)
         .attr('y', 65)
-        .text('Значения по раку шейки матки')
+        .text('Количество смертей от рака шейки матки')
 }
 
 function update_ss(year){

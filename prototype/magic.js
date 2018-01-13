@@ -37,6 +37,7 @@ function start(){
     //year_trigger();
     rate_trigger()
     ss_trigger()
+    ts_trigger()
     head()
 }
 
@@ -139,6 +140,34 @@ function ss_trigger(){
                 cause = 'neoplazm';
                 d3.selectAll('.test').style('visibility', 'visible')
                 d3.select('#Year').attr('class', 'fs')
+                sizing(2013)
+            }
+        })
+        .addTo(controller); // assign the scene to the controller
+}
+
+function ts_trigger(){
+    var controller = new ScrollMagic.Controller();
+    var scene = new ScrollMagic.Scene({
+        duration: 0,    // the scene should last for a scroll distance of 100px
+        offset: fs_height + ss_height,    // start this scene after scrolling for 50px
+    })
+        .on('start', function(e){
+            if (e.scrollDirection == 'FORWARD'){
+                d3.select('#map').select('#bars').remove().transition().duration(60);
+                //remove_ss();
+                //controller_ss.removeScene(scene);
+                start_check_ss = false;
+                console.log('hi')
+            }else{
+                if (start_check_ss == false){
+                    data_load_ss();
+                    year_trigger_ss()
+                    start_check_ss = true;
+                    cause = ' '
+                    d3.selectAll('.test').style('visibility', 'hidden')
+                    d3.select('#Year').attr('class', 'ss')
+                }
             }
         })
         .addTo(controller); // assign the scene to the controller
@@ -181,6 +210,19 @@ function head(){
                 d3.select('#main_head').text(d3.select('#head_ss2').text())
             } else{
                 d3.select('#main_head').text(d3.select('#head_ss').text())
+            }
+        })
+        .addTo(controller);
+
+    var scene3 = new ScrollMagic.Scene({
+        triggerElement: '#head_ts',
+        triggerHook: 0.15
+    })
+        .on('start', function(e){
+            if (e.scrollDirection == 'FORWARD'){
+                d3.select('#main_head').text(d3.select('#head_ts').text())
+            } else{
+                d3.select('#main_head').text(d3.select('#head_ss2').text())
             }
         })
         .addTo(controller);

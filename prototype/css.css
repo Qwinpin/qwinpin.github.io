@@ -8,7 +8,12 @@
 }
 
 .test{
+	font-family: "Sans-serif", Verdana;
 	color: #222222;
+}
+
+.legend{
+	font-family: "Sans-serif", Verdana;
 }
 
 .headers{
@@ -16,6 +21,12 @@
 	font-size: 30px;
 	text-align: center;
 	display: inline-block;
+}
+
+#main_head{
+	font-family: "Sans-serif", Verdana;
+	font-size: 35px;
+	text-align: center;
 }
 
 #Cause{
@@ -26,6 +37,7 @@
 }
 
 #Year{
+	font-family: "Sans-serif", Verdana;
 	color: #FF4040;
 	display: inline-block;
 	font-size: 30px;
@@ -33,7 +45,13 @@
 
 .text{
 	font-family: "Sans-serif", Verdana;
-    color: rgb(33, 33, 32);
+	font-size: 20px;
+	color: rgb(33, 33, 32);
+	text-align: justify;
+}
+
+.light{
+    color: #FF4040;
 }
 
 #counter{
@@ -42,8 +60,8 @@
 
 .top{
 	position: fixed;
+	width: 600px;
 	top: 0;
-    width: 40%;
 	height: 150px;
 	background-color: #f8f8f8;
 	text-align: center;
@@ -56,7 +74,7 @@
 	margin-left: 15px;
 	margin-top: 200px;
 	float:left;
-	width:500px;
+	width:600px;
 	box-sizing:border-box;
 	padding:5px;
 	min-height:200px;
@@ -70,12 +88,12 @@
 
 .right{
     position: fixed;
-    left: 500px;
+    left: 600px;
 	float:left;
-    width:59%;
+    /*width:59%;*/
     height: 100%;
 	box-sizing:border-box;
-	padding:10px;
 	min-height:200px;
 	text-align: center;
+	top: 100;
 }
