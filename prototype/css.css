@@ -12,6 +12,23 @@
 	color: #222222;
 }
 
+.man_node{
+	/*fill: #ffffff;*/
+}
+
+.male{
+	display:inline-block;
+}
+
+.female{
+	display:inline-block;
+}
+
+.clicked{
+	fill: #FF4040;
+	stroke: white;
+}
+
 .legend{
 	font-family: "Sans-serif", Verdana;
 }
@@ -62,7 +79,7 @@
 	position: fixed;
 	width: 600px;
 	top: 0;
-	height: 150px;
+	height: 100px;
 	background-color: #f8f8f8;
 	text-align: center;
 }
@@ -96,4 +113,67 @@
 	min-height:200px;
 	text-align: center;
 	top: 100;
+}
+.d3-tip {
+    /*line-height: 5;*/
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 100px;
+    border-style: groove;
+    /*padding: 12px;*/
+    background: #FFFFFF;
+    color: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+    pointer-events: none;
+}
+.tooltip-title{
+    font-size:20px;
+    font-family: "Sans-serif", Verdana;
+
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    /*box-sizing: border-box;*/
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    /*line-height: 1;*/
+    color: rgba(0, 0, 0, 0.8);
+    position: relative;
+    pointer-events: none;
+}
+
+/* Northward tooltips */
+.d3-tip.n:after {
+    content: "\25BC";
+    /*margin: -1px 0 0 0;*/
+    top: 100%;
+    left: 0;
+    text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+    content: "\26A0";
+    /*margin: -4px 0 0 0;*/
+    top: -800px;
+    left: -8px;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+    content: "\25B2";
+    /*margin: 4px 0 1px 0;*/
+    top: -8px;
+    left: 1481px;
+    text-align: center;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+    content: "\25B6";
+    /*margin: -4px 0 0 -1px;*/
+    top: 50%;
+    left: 100%;
 }

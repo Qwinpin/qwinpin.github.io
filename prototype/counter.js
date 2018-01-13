@@ -10,7 +10,7 @@ function set_counter(year){
         //counted = !counted;
         d3.select('#counter')
         .transition()
-        .duration(10)
+        .duration(100)
             .tween("text", function() {
                 var that = d3.select(this),
                     i = d3.interpolateNumber(that.text(), Math.round(rate / summ_death * 100));

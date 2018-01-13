@@ -120,6 +120,9 @@ function ss_trigger(){
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
+                simulation.force('x', d3.forceX().strength(0.15).x(right_width/2))
+                    .force('y', d3.forceY().strength(0.15).y(-100))
+                    .restart()
                 df.forEach(function(d, j) {
                     d.value = 1;
                 })
@@ -141,6 +144,9 @@ function ss_trigger(){
                 d3.selectAll('.test').style('visibility', 'visible')
                 d3.select('#Year').attr('class', 'fs')
                 sizing(2013)
+                simulation.force('x', d3.forceX().strength(0.15).x(center.x))
+                    .force('y', d3.forceY().strength(0.15).y(center.y))
+                .restart()
             }
         })
         .addTo(controller); // assign the scene to the controller
@@ -159,14 +165,18 @@ function ts_trigger(){
                 //controller_ss.removeScene(scene);
                 start_check_ss = false;
                 console.log('hi')
+                data_load_ts()
+                d3.selectAll('.headers').style('visibility', 'hidden')
+                d3.selectAll('#Year').style('visibility', 'hidden')
             }else{
                 if (start_check_ss == false){
+                    d3.select('#map').select('#ts').remove().transition().duration(60);
                     data_load_ss();
                     year_trigger_ss()
                     start_check_ss = true;
-                    cause = ' '
+                    d3.selectAll('.headers').style('visibility', 'visible')
+                    d3.selectAll('#Year').style('visibility', 'visible')
                     d3.selectAll('.test').style('visibility', 'hidden')
-                    d3.select('#Year').attr('class', 'ss')
                 }
             }
         })
