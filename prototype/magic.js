@@ -52,25 +52,24 @@ function year_trigger(){
         .range(foo);
     window.controller_fs = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 0,    // the scene should last for a scroll distance of 100px
-        offset: 100,    // start this scene after scrolling for 50px
+        duration: 0,
+        offset: 100,
     })
         .on('update', function(e){
             if (e.scrollPos <= fs_height){
                 sizing(scale(e.scrollPos))
                 d3.select('#Year').text(scale(e.scrollPos))
-                console.log(scale(e.scrollPos))
             }else{
             }
             
         })
-        .addTo(controller_fs); // assign the scene to the controller
+        .addTo(controller_fs);
 }
 
 function year_trigger_ss(){
     var height = d3.select('#second_story').attr('height');
     var foo = [];
-    for (var i=1979; i<2015; i += 1){
+    for (var i=1979; i<2014; i += 1){
         foo.push(i);
     }
     var scale_ss = d3.scaleQuantile()
@@ -78,21 +77,20 @@ function year_trigger_ss(){
         .range(foo);
     window.controller_ss = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: ss_height,    // the scene should last for a scroll distance of 100px
-        offset: fs_height+100,    // start this scene after scrolling for 50px
+        duration: ss_height,
+        offset: fs_height+200,
     })
         .on('update', function(e){
                 update_ss(scale_ss(e.scrollPos))
                 d3.select('.ss').text(scale_ss(e.scrollPos))
         })
-        .addTo(controller_ss); // assign the scene to the controller
+        .addTo(controller_ss);
 }
 
 function rate_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: fs_height,    // the scene should last for a scroll distance of 100px
-        offset: 250,    // start this scene after scrolling for 50px
+        offset: 250,
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -106,17 +104,15 @@ function rate_trigger(){
                 df.forEach(function(d, j) {
                     d.value = 1;
                 })
-                //d3.select('#map').selectAll("*").remove();
             }
         })
-        .addTo(controller); // assign the scene to the controller
+        .addTo(controller);
 }
 
 function ss_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 0,    // the scene should last for a scroll distance of 100px
-        offset: fs_height,    // start this scene after scrolling for 50px
+        offset: fs_height-100,
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -134,40 +130,39 @@ function ss_trigger(){
                 cause = ' '
                 d3.selectAll('.test').style('visibility', 'hidden')
                 d3.select('#Year').attr('class', 'ss')
+                d3.select('#title').text('Распределение смертности от онкологии по возрастным группам')
             }
             }else{
                 d3.select('#map').select('#bars').remove().transition().duration(60);
-                //remove_ss();
-                //controller_ss.removeScene(scene);
+                d3.select('#map').select('#bars2').remove().transition().duration(60);
                 start_check_ss = false;
-                cause = 'neoplazm';
+                cause = 'Новообразования';
                 d3.selectAll('.test').style('visibility', 'visible')
                 d3.select('#Year').attr('class', 'fs')
+                d3.select('#title').text('Структура смертности населения Земли')
                 sizing(2013)
                 simulation.force('x', d3.forceX().strength(0.15).x(center.x))
                     .force('y', d3.forceY().strength(0.15).y(center.y))
                 .restart()
             }
         })
-        .addTo(controller); // assign the scene to the controller
+        .addTo(controller);
 }
 
 function ts_trigger(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
-        duration: 0,    // the scene should last for a scroll distance of 100px
-        offset: fs_height + ss_height,    // start this scene after scrolling for 50px
+        offset: fs_height + ss_height,
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
                 d3.select('#map').select('#bars').remove().transition().duration(60);
-                //remove_ss();
-                //controller_ss.removeScene(scene);
+                d3.select('#map').select('#bars2').remove().transition().duration(60);
                 start_check_ss = false;
-                console.log('hi')
                 data_load_ts()
                 d3.selectAll('.headers').style('visibility', 'hidden')
                 d3.selectAll('#Year').style('visibility', 'hidden')
+                d3.select('#title').text('Ключевые локализации опухолей для российской популяции').style('visibility', 'visible')
             }else{
                 if (start_check_ss == false){
                     d3.select('#map').select('#ts').remove().transition().duration(60);
@@ -177,10 +172,11 @@ function ts_trigger(){
                     d3.selectAll('.headers').style('visibility', 'visible')
                     d3.selectAll('#Year').style('visibility', 'visible')
                     d3.selectAll('.test').style('visibility', 'hidden')
+                    d3.select('#title').text('Распределение смертности от онкологии по возрастным группам')
                 }
             }
         })
-        .addTo(controller); // assign the scene to the controller
+        .addTo(controller);
 }
 
 function head(){
@@ -211,19 +207,6 @@ function head(){
         })
         .addTo(controller);
 
-    var scene2_2 = new ScrollMagic.Scene({
-        triggerElement: '#head_ss2',
-        triggerHook: 0.15
-    })
-        .on('start', function(e){
-            if (e.scrollDirection == 'FORWARD'){
-                d3.select('#main_head').text(d3.select('#head_ss2').text())
-            } else{
-                d3.select('#main_head').text(d3.select('#head_ss').text())
-            }
-        })
-        .addTo(controller);
-
     var scene3 = new ScrollMagic.Scene({
         triggerElement: '#head_ts',
         triggerHook: 0.15
@@ -232,7 +215,7 @@ function head(){
             if (e.scrollDirection == 'FORWARD'){
                 d3.select('#main_head').text(d3.select('#head_ts').text())
             } else{
-                d3.select('#main_head').text(d3.select('#head_ss2').text())
+                d3.select('#main_head').text(d3.select('#head_ss').text())
             }
         })
         .addTo(controller);

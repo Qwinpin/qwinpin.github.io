@@ -1,7 +1,7 @@
 function death_rate(){
     window.counted = false;
     window.rate = 0;
-    window.cause = 'neoplazm';
+    window.cause = 'Новообразования';
 }
 
 function set_counter(year){

@@ -22,8 +22,6 @@ function load(data){
         summ_death += df[i].value;
     }
     var element = d3.select('#map').node();
-    //window.width = element.getBoundingClientRect().width;
-    //window.height = element.getBoundingClientRect().height;
     window.center = { x: right_width / 2, y: right_height / 2 };
     var svg = d3.select('#map')
     window.simulation = d3.forceSimulation()
@@ -44,7 +42,7 @@ function load(data){
                 return d.value / summ_death * right_width/2;
             })
             .attr("fill", function(d){
-                if (d.key == 'neoplazm'){
+                if (d.key == 'Новообразования'){
                     return '#FF4040';
                 } else{
                     return 'grey';
@@ -56,24 +54,7 @@ function load(data){
                 .on("end", dragended))
             
             node.on('click', hovered)
-            .on('mouseout', hovered_out)
-    /*var text = svg.append('g')
-        .selectAll('text')
-        .data(df)
-        .enter().append('text')
-            .attr('class', 'text')
-            .text(function(d){
-                return d.key;
-            })
-            .attr('font-size', function(d){
-                return d.value / summ_death * 300;
-            })
-            .attr('dx', function(d){
-                return -d.value / summ_death * 300;
-            })
-            .attr('dy', function(d){
-                return d.value / summ_death * 300;
-            })*/
+                .on('mouseout', hovered_out)
     
     simulation
         .nodes(df)
@@ -150,13 +131,6 @@ function ticked() {
         .attr('r', function(d){
             return d.value / summ_death * right_width/2;
         })
-
-    /*text.transition().duration(dur)
-        .attr('x', function(d) { return d.x; })
-        .attr('y', function(d) { return d.y; })
-        .attr('font-size', function(d){
-            return d.value / summ_death * 300;
-        })*/
 }
 
 function close_fs(){

@@ -35,7 +35,7 @@
 
 .headers{
 	font-family: "Sans-serif", Verdana;
-	font-size: 30px;
+	font-size: 28px;
 	text-align: center;
 	display: inline-block;
 }
@@ -50,14 +50,14 @@
 	color: #222222;
 	font-family: "Sans-serif", Verdana;
 	display: inline-block;
-	font-size: 30px;
+	font-size: 28px;
 }
 
 #Year{
 	font-family: "Sans-serif", Verdana;
 	color: #FF4040;
 	display: inline-block;
-	font-size: 30px;
+	font-size: 28px;
 }
 
 .text{
@@ -91,7 +91,7 @@
 	margin-left: 15px;
 	margin-top: 200px;
 	float:left;
-	width:600px;
+	width:585px;
 	box-sizing:border-box;
 	padding:5px;
 	min-height:200px;
@@ -109,7 +109,6 @@
 	float:left;
     /*width:59%;*/
     height: 100%;
-	box-sizing:border-box;
 	min-height:200px;
 	text-align: center;
 	top: 100;

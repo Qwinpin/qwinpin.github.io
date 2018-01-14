@@ -9,6 +9,6 @@ for i in names:
 	del data[delet[0]]
 	del data[delet[1]]
 	print(i)
-	iss = i[:-8]
-	data = data.assign(Cause = pandas.Series([iss for x in range(141)]).values)
-	data.to_csv(('C:\\video\\csv\\' + i + '.csv'))
+	age = i[:-14]
+	data = data.assign(Age = pandas.Series([age for x in range(141)]).values)
+	data.to_csv(('C:\\video\\csv\\' + i[:-14] + '.csv'))
