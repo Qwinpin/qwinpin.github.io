@@ -64,8 +64,9 @@ function load_ts(data){
         .attr("xlink:href", ".//pict.svg")
         .attr("width", (right_width+((right_width/2)/5.3))/2)
         .attr("height", right_width/2)
-        .attr("transform", "translate(" + ((right_width/2)/6.6) + ',' + ((right_width/2)/66) + ")")
+        .attr("transform", "translate(" + ((right_width/2)/6.6 + (right_width/6)) + ',' + ((right_width/2)/66 + (right_width/15)) + ")")
     var man = d3.select('#ts2')
+    man.attr("transform", "translate(" + ((right_width/6)) + ',' + ((right_width/15)) + ")")
     man.selectAll('cirle').data(data)
         .enter()
         .append('circle').attr('class', 'man_node')
@@ -87,7 +88,7 @@ function load_ts(data){
                 .attr('stroke', 'grey')
             tip.hide(d);
         })
-
+    
     function translate(d) {
         var x = 0;
         var y = 0;

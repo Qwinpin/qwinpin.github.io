@@ -116,8 +116,8 @@ function ss_trigger(){
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
-                simulation.force('x', d3.forceX().strength(0.15).x(right_width/2))
-                    .force('y', d3.forceY().strength(0.15).y(-100))
+                simulation.force('x', d3.forceX().strength(0.1).x(right_width/2))
+                    .force('y', d3.forceY().strength(0.1).y(-100))
                     .restart()
                 df.forEach(function(d, j) {
                     d.value = 1;
@@ -141,8 +141,8 @@ function ss_trigger(){
                 d3.select('#Year').attr('class', 'fs')
                 d3.select('#title').text('Структура смертности населения Земли')
                 sizing(2013)
-                simulation.force('x', d3.forceX().strength(0.15).x(center.x))
-                    .force('y', d3.forceY().strength(0.15).y(center.y))
+                simulation.force('x', d3.forceX().strength(0.1).x(center.x))
+                    .force('y', d3.forceY().strength(0.1).y(center.y))
                 .restart()
             }
         })
@@ -183,7 +183,7 @@ function head(){
     var controller = new ScrollMagic.Controller();
     var scene = new ScrollMagic.Scene({
         triggerElement: '#head_fs',
-        triggerHook: 0.15
+        triggerHook: 0.06
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -196,7 +196,7 @@ function head(){
 
     var scene2 = new ScrollMagic.Scene({
         triggerElement: '#head_ss',
-        triggerHook: 0.15
+        triggerHook: 0.06
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
@@ -209,7 +209,7 @@ function head(){
 
     var scene3 = new ScrollMagic.Scene({
         triggerElement: '#head_ts',
-        triggerHook: 0.15
+        triggerHook: 0.06
     })
         .on('start', function(e){
             if (e.scrollDirection == 'FORWARD'){
