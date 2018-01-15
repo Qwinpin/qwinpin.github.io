@@ -60,13 +60,17 @@
 	font-size: 28px;
 }
 
+
 .text{
 	font-family: "Sans-serif", Verdana;
 	font-size: 20px;
 	color: rgb(33, 33, 32);
 	text-align: justify;
 }
-
+.bottom{
+	font-size: 14px;
+	text-align: center;
+}
 .light{
     color: #FF4040;
 }
@@ -111,8 +115,9 @@
     height: 100%;
 	min-height:200px;
 	text-align: center;
-	top: 100;
+	top: 20px;
 }
+
 .d3-tip {
     /*line-height: 5;*/
     padding-left: 10px;
