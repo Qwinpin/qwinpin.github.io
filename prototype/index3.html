@@ -49,6 +49,7 @@
                 Берегите себя. Пройдите тест на выявление индивидуальных факторов риска рака, созданный экспертами в области онкоэпидемиологии и организации профилактики онкологических заболеваний.<br /><br /><br /><br /><br /><br />
                 </p>
     </div>
+    <div onmousedown="isKeyPressed(event)" id='wop'><br /><br /></div>
     <div id = 'text5' class = 'bottom text'>
         <p><ul><li><a href='http://www.who.int/healthinfo/mortality_data/en/'>WHO Mortality Database</a></li> 
             <li><a href='http://www.oncology.ru/service/statistics/malignant_tumors/2015.pdf'>Сборник “Злокачественные новообразования в России в 2015 году (заболеваемость и смертность)” под ред. А.Д. Каприна, В.В. Старинского, Г.В. Петровой</a></li>
@@ -71,6 +72,17 @@
 <script>
 window.onbeforeunload = function () {
     window.scrollTo(0, 0);
+}
+function isKeyPressed(event) {
+    var x = document.getElementById("demo");
+    if (event.altKey) {
+        d3.select('#map').select('image').remove().transition().duration(60);
+        d3.select("#ts1").append("image")
+            .attr("xlink:href", "wop.svg")
+            .attr("width", (right_width+((right_width/2)/5.3))/2)
+            .attr("height", right_width/2)
+            .attr("transform", "translate(" + ((right_width/2)/6.6 + (right_width/6)) + ',' + ((right_width/2)/66 + (right_width/15)) + ")")
+    }
 }
 </script>
 </html>
