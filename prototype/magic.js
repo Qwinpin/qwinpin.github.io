@@ -123,6 +123,7 @@ function ss_trigger(){
                     d.value = 1;
                 })
                 ticked();
+                d3.select('#hint_box').remove()
             if (start_check_ss == false){
                 data_load_ss();
                 year_trigger_ss()
@@ -164,6 +165,7 @@ function ts_trigger(){
                 d3.selectAll('#Year').style('visibility', 'hidden')
                 d3.select('#title').text('Ключевые локализации опухолей для российской популяции').style('visibility', 'visible')
             }else{
+                d3.select('#hint_box').remove()
                 if (start_check_ss == false){
                     d3.select('#map').select('#ts').remove().transition().duration(60);
                     data_load_ss();

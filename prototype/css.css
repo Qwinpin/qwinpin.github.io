@@ -131,6 +131,13 @@
 
 }
 
+.hint{
+	fill: #888686;
+	font-family: "Sans-serif", Arial;
+	font-size: 14px;
+	text-align: center;
+}
+
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
     /*box-sizing: border-box;*/

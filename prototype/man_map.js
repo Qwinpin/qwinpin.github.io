@@ -86,8 +86,17 @@ function load_ts(data){
             d3.select(this)
                 .attr("fill", 'white')
                 .attr('stroke', 'grey')
+            d3.select('#hint_box').remove()
             tip.hide(d);
         })
+
+        d3.select('#map').append('g').attr('id', 'hint_box')
+        .attr("transform", function(d) {
+            return "translate(" + center.x*0.5 + "," + right_height*0.8 + ")"; 
+        })
+        .append('text')
+        .attr('class', 'hint')
+        .text('Наведите на шарик, чтобы увидеть дополнительную информацию')
     
     function translate(d) {
         var x = 0;

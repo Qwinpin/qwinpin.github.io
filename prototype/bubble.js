@@ -83,11 +83,23 @@ function load(data){
     function hovered(){
         rate = d3.select(this).data()[0].value;
         cause = d3.select(this).data()[0].key;
+        d3.selectAll('circle').style('fill', 'grey')
+        d3.select(this).style('fill', '#FF4040')
         set_counter();
+        d3.select('#hint_box').remove()
     }
 
     function hovered_out(){
     }
+
+    svg.append('g').attr('id', 'hint_box')
+        .attr("transform", function(d) {
+            return "translate(" + center.x*0.5 + "," + right_height*0.8 + ")"; 
+        })
+        .append('text')
+        .attr('class', 'hint')
+        .text('Нажмите на шарик для смены причины смерти')
+        
 }
 
 function sizing(v){
