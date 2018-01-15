@@ -54,23 +54,23 @@ function load_ts(data){
     d3.select('#map').call(tip)
     // d3.select("#map").append('g').attr('id', 'ts').append("image").attr('id', 'man_map')
     //     .attr("xlink:href",".//pict.svg")
-    //     .attr("width", right_width/2)
+    //     .attr("width", right_width/2/2)
     //     .attr("height", right_height/2)
-    //     .attr('x', right_width*0.3)
+    //     .attr('x', right_width/2*0.3)
     //     .attr('y', right_height*0.1)
     d3.select('#map').append('g').attr('id', 'ts').append('g').attr('id', 'ts1')
     d3.select('#ts').append('g').attr('id', 'ts2')
     d3.selectAll("#ts1").append("image")
         .attr("xlink:href", ".//pict.svg")
-        .attr("width", 500)
-        .attr("height", 500)
-        .attr("transform", "translate(" + 100 + ',' + 10 + ")")
+        .attr("width", (right_width+((right_width/2)/5.3))/2)
+        .attr("height", right_width/2)
+        .attr("transform", "translate(" + ((right_width/2)/6.6) + ',' + ((right_width/2)/66) + ")")
     var man = d3.select('#ts2')
     man.selectAll('cirle').data(data)
         .enter()
         .append('circle').attr('class', 'man_node')
         .attr('r', function(d){
-            return right_width/70
+            return right_width/100
         })
         .attr('transform', translate)
         .attr('fill', 'white')
@@ -93,63 +93,63 @@ function load_ts(data){
         var y = 0;
         if (d.loc == 'Кожа'){
             if (d.sex == 'male'){
-                x = 500*0.25;
-                y = 500*0.4;
+                x = right_width/2*0.25;
+                y = right_width/2*0.4;
             }else{
-                x = 500*1.15;
-                y = 500*0.45;
+                x = right_width/2*1.15;
+                y = right_width/2*0.45;
             }
         }
         if (d.loc == 'Легкое'){
             if (d.sex == 'male'){
-                x = 500*0.44;
-                y = 500*0.38;
+                x = right_width/2*0.44;
+                y = right_width/2*0.38;
             }else{
-                x = 500*0.85;
-                y = 500*0.48;
+                x = right_width/2*0.85;
+                y = right_width/2*0.48;
             }
         }
         if (d.loc == 'Предстательная железа'){
-            x = 500*0.49;
-            y = 500*0.55;
+            x = right_width/2*0.49;
+            y = right_width/2*0.55;
         }
         if (d.loc == 'Молочная железа'){
-            x = 500*0.95;
-            y = 500*0.45;
+            x = right_width/2*0.95;
+            y = right_width/2*0.45;
         }
         if (d.loc == 'Тело матки'){
-            x = 500*0.89;
-            y = 500*0.63;
+            x = right_width/2*0.89;
+            y = right_width/2*0.63;
         }
         if (d.loc == 'Шейка матки'){
-            x = 500*0.93;
-            y = 500*0.63;
+            x = right_width/2*0.93;
+            y = right_width/2*0.63;
         }
         if (d.loc == 'Мозг'){
             if (d.sex == 'male'){
-                x = 500*0.49;
-                y = 500*0.15;
+                x = right_width/2*0.49;
+                y = right_width/2*0.15;
             }else{
-                x = 500*0.91;
-                y = 500*0.22;
+                x = right_width/2*0.91;
+                y = right_width/2*0.22;
             }
         }
         if (d.loc == 'Желудок'){
             if (d.sex == 'male'){
-                x = 500*0.49;
-                y = 500*0.45;
+                x = right_width/2*0.49;
+                y = right_width/2*0.45;
             }else{
-                x = 500*0.91;
-                y = 500*0.55;
+                x = right_width/2*0.91;
+                y = right_width/2*0.55;
             }
         }
         if (d.loc == 'Колоректальный рак'){
             if (d.sex == 'male'){
-                x = 500*0.49;
-                y = 500*0.49;
+                x = right_width/2*0.49;
+                y = right_width/2*0.49;
             }else{
-                x = 500*0.91;
-                y = 500*0.59;
+                x = right_width/2*0.91;
+                y = right_width/2*0.59;
             }
         }
         return "translate(" + x + "," + y + ")";

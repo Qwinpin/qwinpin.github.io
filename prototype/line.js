@@ -62,12 +62,12 @@ function load_ss(data, data2){
         .attr('y', function(d){ return line_height-margin.bottom - y(d.value); })
     svg.append("g").attr('class', 'axis')
         .attr("transform", "translate(150," + 0 + ")")
-        .transition().duration(1000)
+        .transition().duration(500)
         .attr("transform", "translate(150," + (line_height-margin.bottom) + ")")
         .call(d3.axisBottom(x));
     svg.append("g").attr('class', 'axis')
         .attr("transform", "translate(150," + 0 + ")")
-        .transition().duration(1000)
+        .transition().duration(500)
         .attr("transform", "translate(150,0)")
         .call(d3.axisLeft(y))
 
