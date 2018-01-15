@@ -136,6 +136,7 @@ function ss_trigger(){
             }else{
                 d3.select('#map').select('#bars').remove().transition().duration(60);
                 d3.select('#map').select('#bars2').remove().transition().duration(60);
+                d3.select('#map').select('#bars_y').remove().transition().duration(60);
                 start_check_ss = false;
                 cause = 'Новообразования';
                 d3.selectAll('.test').style('visibility', 'visible')
@@ -159,6 +160,7 @@ function ts_trigger(){
             if (e.scrollDirection == 'FORWARD'){
                 d3.select('#map').select('#bars').remove().transition().duration(60);
                 d3.select('#map').select('#bars2').remove().transition().duration(60);
+                d3.select('#map').select('#bars_y').remove().transition().duration(60);
                 start_check_ss = false;
                 data_load_ts()
                 d3.selectAll('.headers').style('visibility', 'hidden')
