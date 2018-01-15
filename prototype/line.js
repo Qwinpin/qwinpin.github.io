@@ -28,11 +28,11 @@ function load_ss(data, data2){
         .entries(second_story2);
 
     window.line_height = right_height*0.7;
-    var x = d3.scaleBand()
+    window.x = d3.scaleBand()
         .domain(years)
         .range([0, right_width-190])
 
-    var y = d3.scaleLog()
+    window.y = d3.scaleLog()
         .domain([d3.max(df_ss, function(d){ return d.value }), 1])
         .range([line_height-margin.bottom, 10]);
     // append the svg obgect to the body of the page
@@ -40,7 +40,7 @@ function load_ss(data, data2){
     // moves the 'group' element to the top left margin
     var svg = d3.select('#map').append('g').attr('id', 'bars')
     var svg2 = d3.select('#map').append('g').attr('id', 'bars2')
-    var step = 141 + (x(['1-4']) - x(['1']))/2
+    window.step = 141 + (x(['1-4']) - x(['1']))/2
     var bars = svg.selectAll('rect')
         .data(df_ss)
         .enter().append('rect')
@@ -92,14 +92,43 @@ function load_ss(data, data2){
         .attr('x', 15)
         .attr('y', 65)
         .text('Количество смертей от рака шейки матки')
+    df_ss.sort(function(a, b){
+        return years.indexOf(a.key) > years.indexOf(b.key) 
+    })
+    df_ss2.sort(function(a, b){
+        return years.indexOf(a.key) > years.indexOf(b.key) 
+    })
+    // console.log(df_ss, df)
+    // var lineFunction = d3.line()
+    //     .x(function(d) { return (step + (x(d.key) + 5)); })
+    //     .y(function(d) { return (line_height-margin.bottom - y(d.value)); })
+    // var lineGraph = d3.select('#bars').append("path")
+    //     .attr("d", lineFunction(df_ss))
+    //     .attr("stroke", "grey")
+    //     .attr("stroke-width", 1)
+    //     .attr("fill", "none");
+    // var lineFunction = d3.line()
+    //     .x(function(d) { return (step + (x(d.key) + 5)); })
+    //     .y(function(d) { return (line_height-margin.bottom - y(d.value)); })
+    // var lineGraph = d3.select('#bars').append("path")
+    //     .attr("d", lineFunction(df_ss))
+    //     .attr("stroke", "#FF4040")
+    //     .attr("stroke-width", 1)
+    //     .attr("fill", "none");
+    // var lineFunction2 = d3.line()
+    //     .x(function(d) { return (step + (x(d.key) + 5)); })
+    //     .y(function(d) { return (line_height-margin.bottom - y(d.value)); })
+    // var lineGraph2 = d3.select('#bars2').append("path")
+    //     .attr("d", lineFunction2(df_ss2))
+    //     .attr("stroke", "#FF4040")
+    //     .attr("stroke-width", 1)
+    //     .attr("fill", "none");
 }
 
 function update_ss(year){
+    var years = ['1', '1-4', '5-14', '15-24', '25-34', '35-54', '55-74', '75']
     current_year_ss = year;
     set_counter(year);
-    var y = d3.scaleLog()
-        .domain([d3.max(df_ss, function(d){ return d.value }), 1])
-        .range([line_height-margin.bottom, 10]);
     df_ss.forEach(function(d, j) {
         var temp = d3.nest()
             .key(function(d) { return d.Age;})
@@ -129,6 +158,25 @@ function update_ss(year){
             })
         .attr('y', function(d){ 
             return line_height-margin.bottom - y(d.value);})
+//     d3.select('#bars').select("path").remove().transition().duration(100)
+//     d3.select('#bars2').select("path").remove().transition().duration(100)
+    
+//    var lineFunction = d3.line()
+//         .x(function(d) { return (step + (x(d.key) + 5)); })
+//         .y(function(d) { return (line_height-margin.bottom - y(d.value)); })
+//     var lineGraph = d3.select('#bars').append("path")
+//         .attr("d", lineFunction(df_ss))
+//         .attr("stroke", "#FF4040")
+//         .attr("stroke-width", 1)
+//         .attr("fill", "none");
+//     var lineFunction2 = d3.line()
+//         .x(function(d) { return (step + (x(d.key) + 5)); })
+//         .y(function(d) { return (line_height-margin.bottom - y(d.value)); })
+//     var lineGraph2 = d3.select('#bars2').append("path")
+//         .attr("d", lineFunction(df_ss2))
+//         .attr("stroke", "#FF4040")
+//         .attr("stroke-width", 1)
+//         .attr("fill", "none");
 }
 
 function remove_ss(){
