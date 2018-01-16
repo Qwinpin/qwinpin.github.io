@@ -93,8 +93,8 @@ function load_ss(data, data2){
         .attr('y', 65)
         .text('Количество смертей от рака шейки матки')
     d3.select('#map').append('text').attr('id', 'bars_y')
-        .attr('x', -right_width*0.5)
-        .attr('y', right_height*0.12)
+        .attr('x', -right_width*0.35)
+        .attr('y', right_height*0.10)
         .text('Количество смертей').attr("transform", "rotate(-90)");
     df_ss.sort(function(a, b){
         return years.indexOf(a.key) > years.indexOf(b.key) 
